@@ -1,13 +1,16 @@
 import argparse
+import sys
+from typing import Any, Dict, List
 
 import yaml
 
 from fairshare.expense import Expense
 from fairshare.ledger import Ledger
 from fairshare.report_generator import ReportGenerator
+from fairshare.wizard import InteractiveWizard
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="FairShare: Kosten unter Personen aufteilen.")
     parser.add_argument(
         "file",
@@ -18,14 +21,28 @@ def main():
     parser.add_argument(
         "--report", default="report.md", help="Pfad für den Markdown-Bericht (Standard: report.md)"
     )
+    parser.add_argument(
+        "--init",
+        action="store_true",
+        help="Startet den interaktiven Assistenten zum Erstellen einer neuen Datei.",
+    )
     args = parser.parse_args()
+
+    # Interaktiver Modus
+    if args.init:
+        InteractiveWizard.run(args.file)
+        sys.exit(0)
 
     try:
         with open(args.file, "r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
 
-        participants = data.get("participants", [])
-        expenses_data = data.get("expenses", [])
+        if not data:
+            print(f"Fehler: Die Datei '{args.file}' ist leer.")
+            return
+
+        participants: List[str] = data.get("participants", [])
+        expenses_data: List[Dict[str, Any]] = data.get("expenses", [])
 
         # Initialisierung des Ledgers
         ledger = Ledger(participants)
@@ -35,7 +52,7 @@ def main():
             expense = Expense(
                 payer=e_data["payer"],
                 amount=e_data["amount"],
-                description=e_data.get("description", "Ausgabe"),
+                description=e_data.get("description", None),
                 split_among=e_data.get("split_among"),
             )
             ledger.add_expense(expense)

@@ -30,6 +30,10 @@ python3 run.py
 
 # Oder geben Sie einen spezifischen Pfad an
 python3 run.py meine_kosten.yaml
+
+# Interaktiver Assistent zum Erstellen einer neuen Datei
+python3 run.py --init
+python3 run.py urlaub.yaml --init
 ```
 
 Das Skript generiert automatisch einen detaillierten Markdown-Bericht (`report.md`) im aktuellen Verzeichnis.
