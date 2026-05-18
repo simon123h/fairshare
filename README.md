@@ -25,12 +25,27 @@ Bearbeiten Sie die `costs.yaml` nach Ihren Bedürfnissen und führen Sie das Pro
 ```bash
 # Nutzt standardmäßig 'costs.yaml'
 python3 run.py
-
+```bash
 # Oder geben Sie einen spezifischen Pfad an
 python3 run.py meine_kosten.yaml
 ```
 
+Das Skript generiert automatisch einen Markdown-Bericht (`report.md`), der eine tabellarische Zusammenfassung und alle Details enthält.
+
+### PDF-Export mit Pandoc
+
+Sie können den generierten Markdown-Bericht mit **Pandoc** in ein PDF konvertieren. Mit der Option `-V geometry:margin=2cm` lassen sich die Seitenränder anpassen:
+
+```bash
+# Einfache Konvertierung
+pandoc report.md -V geometry:margin=2cm -o abrechnung.pdf
+
+# Via LaTeX (für ein professionelleres Layout, benötigt xelatex)
+pandoc report.md -V geometry:margin=2cm -o abrechnung.pdf --pdf-engine=xelatex
+```
+
 ## Tests
+
 
 Das Projekt enthält Unit-Tests, um die Korrektheit der Berechnungen sicherzustellen. Sie können die Tests mit folgendem Befehl ausführen:
 
