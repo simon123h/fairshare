@@ -46,6 +46,13 @@ ruff format .
 ruff check . --fix
 ```
 
+## CI/CD
+
+Das Projekt enthält Konfigurationen für **GitLab CI/CD** (`.gitlab-ci.yml`) und **GitHub Actions** (`.github/workflows/ci.yml`). Die Pipelines führen automatisch folgende Schritte bei jedem Push aus:
+1. **Linting**: Prüfung durch Ruff auf Code-Qualität und Formatierung.
+2. **Tests**: Ausführung aller Unit-Tests.
+
+
 ## YAML-Format
 
 ```yaml

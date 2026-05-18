@@ -1,0 +1,36 @@
+stages:
+  - lint
+  - test
+
+image: python:3.12
+
+# Cache für pip-Pakete, um die Pipeline zu beschleunigen
+cache:
+  paths:
+    - .cache/pip
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+before_script:
+  - python --version
+  - pip install -r requirements.txt
+  - pip install ruff
+
+# Stage: Linting & Formatting
+ruff-lint:
+  stage: lint
+  script:
+    - ruff check .
+    - ruff format --check .
+  allow_failure: false
+
+# Stage: Unit Tests
+unit-tests:
+  stage: test
+  script:
+    - python -m unittest discover tests
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
