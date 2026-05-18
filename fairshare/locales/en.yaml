@@ -17,6 +17,7 @@ tui:
   select_project: "Select a project or create a new one:"
   enter_name: "Enter the name for the new project:"
   new_project: "Create a new project"
+  select_inst: "(↑/↓)"
 
 error:
   not_found: "Error: File '{path}' not found."
@@ -25,16 +26,15 @@ error:
   unexpected: "An unexpected error occurred: {exc}"
 
 wizard:
-  title: "=== FairShare Initialization Wizard ==="
   finish: "(Finish and Save)"
-  success: "Success: File '{path}' created!"
+  success: "Success: Project '{path}' saved!"
   participants:
     q: "Who is participating? (names separated by commas):"
     error_min: "Error: At least one participant must be specified."
   expenses:
     header: "--- Record Expenses ---"
     payer_q: "Who paid?"
-    payer_inst: "(Use arrow keys to select)"
+    payer_inst: "(↑/↓)"
     amount_q: "Amount in €:"
     amount_error: "Error: Please enter a valid number."
     neg_amount_error: "Error: Amount cannot be negative."
@@ -44,7 +44,7 @@ wizard:
     q: "How should the amount be split?"
     all: "Among ALL participants"
     custom: "Select specific people"
-    inst: "(Arrow keys to select)"
+    inst: "(↑/↓)"
   checkbox:
     q: "Select people who share this expense:"
     inst: "(Space to mark, Enter to confirm)"

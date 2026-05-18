@@ -17,6 +17,7 @@ tui:
   select_project: "プロジェクトを選択するか、新しく作成してください:"
   enter_name: "新しいプロジェクトの名前を入力してください:"
   new_project: "新しいプロジェクトを作成"
+  select_inst: "(↑/↓)"
 
 error:
   not_found: "エラー: ファイル '{path}' が見つかりません。"
@@ -25,16 +26,15 @@ error:
   unexpected: "予期しないエラーが発生しました: {exc}"
 
 wizard:
-  title: "=== FairShare 初期設定ウィザード ==="
   finish: "(終了して保存)"
-  success: "成功: ファイル '{path}' が作成されました！"
+  success: "成功: プロジェクト '{path}' が保存されました！"
   participants:
     q: "参加者は誰ですか？ (名前をカンマで区切ってください):"
     error_min: "エラー: 少なくとも1人の参加者を指定する必要があります。"
   expenses:
     header: "--- 経費の記録 ---"
     payer_q: "誰が支払いましたか？"
-    payer_inst: "(矢印キーで選択)"
+    payer_inst: "(↑/↓)"
     amount_q: "金額 (€):"
     amount_error: "エラー: 有効な数字を入力してください。"
     neg_amount_error: "エラー: 金額を負にすることはできません。"
@@ -44,7 +44,7 @@ wizard:
     q: "金額をどのように分割しますか？"
     all: "全員で分割"
     custom: "特定の人を選択"
-    inst: "(矢印キーで選択)"
+    inst: "(↑/↓)"
   checkbox:
     q: "この経費を負担する人を選択してください:"
     inst: "(スペースで選択、Enterで確定)"

@@ -17,6 +17,7 @@ tui:
   select_project: "选择一个项目或创建一个新项目："
   enter_name: "输入新项目的名称："
   new_project: "创建一个新项目"
+  select_inst: "(↑/↓)"
 
 error:
   not_found: "错误：找不到文件 '{path}'。"
@@ -25,16 +26,15 @@ error:
   unexpected: "发生意外错误：{exc}"
 
 wizard:
-  title: "=== FairShare 初始化向导 ==="
   finish: "(完成并保存)"
-  success: "成功：文件 '{path}' 已创建！"
+  success: "成功：项目 '{path}' 已保存！"
   participants:
     q: "谁参与？ (姓名以逗号分隔):"
     error_min: "错误：必须指定至少一名参与者。"
   expenses:
     header: "--- 记录费用 ---"
     payer_q: "谁付的钱？"
-    payer_inst: "(使用方向键选择)"
+    payer_inst: "(↑/↓)"
     amount_q: "金额 (€):"
     amount_error: "错误：请输入有效数字。"
     neg_amount_error: "错误：金额不能为负数。"
@@ -44,7 +44,7 @@ wizard:
     q: "金额应如何分摊？"
     all: "所有参与者平摊"
     custom: "选择特定人员"
-    inst: "(使用方向键选择)"
+    inst: "(↑/↓)"
   checkbox:
     q: "选择分摊此项费用的人员："
     inst: "(空格选择，回车确认)"

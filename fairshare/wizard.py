@@ -28,26 +28,28 @@ class InteractiveWizard:
     )
 
     @staticmethod
-    def run(output_path: str) -> None:
-        print(f"\n{_('wizard.title')}\n")
+    def run(output_path: str, existing_data: Optional[Dict[str, Any]] = None) -> None:
+        if existing_data:
+            participants = existing_data.get("participants", [])
+            expenses = existing_data.get("expenses", [])
+        else:
+            # 1. Teilnehmer abfragen
+            while True:
+                p_input = questionary.text(
+                    _("wizard.participants.q"),
+                    qmark=">",
+                    style=InteractiveWizard.custom_style,
+                ).ask()
 
-        # 1. Teilnehmer abfragen
-        while True:
-            p_input = questionary.text(
-                _("wizard.participants.q"),
-                qmark=">",
-                style=InteractiveWizard.custom_style,
-            ).ask()
+                if p_input is None:
+                    sys.exit(0)
 
-            if p_input is None:
-                sys.exit(0)
+                participants = [p.strip() for p in p_input.split(",") if p.strip()]
+                if participants:
+                    break
+                print(_("wizard.participants.error_min"))
 
-            participants = [p.strip() for p in p_input.split(",") if p.strip()]
-            if participants:
-                break
-            print(_("wizard.participants.error_min"))
-
-        expenses: List[Dict[str, Any]] = []
+            expenses = []
 
         # 2. Ausgaben abfragen
         print(f"\n{_('wizard.expenses.header')}")

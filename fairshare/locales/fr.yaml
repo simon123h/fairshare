@@ -17,6 +17,7 @@ tui:
   select_project: "Sélectionnez un projet ou créez-en un nouveau :"
   enter_name: "Entrez le nom du nouveau projet :"
   new_project: "Créer un nouveau projet"
+  select_inst: "(↑/↓)"
 
 error:
   not_found: "Erreur : Le fichier '{path}' est introuvable."
@@ -25,16 +26,15 @@ error:
   unexpected: "Une erreur inattendue est survenue : {exc}"
 
 wizard:
-  title: "=== Assistant d'initialisation FairShare ==="
   finish: "(Terminer et enregistrer)"
-  success: "Succès : Le fichier '{path}' a été créé !"
+  success: "Succès : Le projet '{path}' a été enregistré !"
   participants:
     q: "Qui participe au règlement ? (noms séparés par des virgules) :"
     error_min: "Erreur : Au moins un participant doit être spécifié."
   expenses:
     header: "--- Enregistrer les dépenses ---"
     payer_q: "Qui a payé ?"
-    payer_inst: "(Utilisez les flèches pour sélectionner)"
+    payer_inst: "(↑/↓)"
     amount_q: "Montant en € :"
     amount_error: "Erreur : Veuillez saisir un nombre valide."
     neg_amount_error: "Erreur : Le montant ne peut pas être négatif."
@@ -44,7 +44,7 @@ wizard:
     q: "Comment le montant doit-il être réparti ?"
     all: "Entre TOUS les participants"
     custom: "Sélectionner des personnes spécifiques"
-    inst: "(Touches fléchées pour sélectionner)"
+    inst: "(↑/↓)"
   checkbox:
     q: "Sélectionnez les personnes qui partagent cette dépense :"
     inst: "(Espace pour marquer, Entrée pour confirmer)"

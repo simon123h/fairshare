@@ -15,7 +15,10 @@ DATA_DIR = Path("fairshare-data")
 
 
 def get_available_projects() -> Dict[str, str]:
-    """Scans the data directory for *.costs.yaml files and returns mapping {pretty_name: filename}."""
+    """
+    Scans the data directory for *.costs.yaml files and returns mapping
+    of the format {pretty_name: filename}.
+    """
     if not DATA_DIR.exists():
         return {}
 
@@ -43,6 +46,7 @@ def main() -> None:
         choices=choices,
         qmark=">",
         style=InteractiveWizard.custom_style,
+        instruction=_("tui.select_inst"),
     ).ask()
 
     if choice is None:
@@ -60,16 +64,25 @@ def main() -> None:
         if not filename.endswith(".costs.yaml"):
             filename += ".costs.yaml"
         input_file = DATA_DIR / filename
-        InteractiveWizard.run(str(input_file))
+        data = None
     else:
         input_file = DATA_DIR / projects_map[choice]
+        try:
+            with open(input_file, "r", encoding="utf-8") as file:
+                data = yaml.safe_load(file)
+        except Exception:
+            data = None
+
+    # Always run the wizard
+    InteractiveWizard.run(str(input_file), existing_data=data)
 
     try:
+        # Reload the data (it might have been created or updated by the wizard)
         with open(input_file, "r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
 
         if not data:
-            print(_("error.empty", path=input_file))
+            print(_("error.empty", path=str(input_file)))
             return
 
         participants: List[str] = data.get("participants", [])

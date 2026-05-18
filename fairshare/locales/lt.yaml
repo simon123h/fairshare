@@ -17,6 +17,7 @@ tui:
   select_project: "Pasirinkite projektą arba sukurkite naują:"
   enter_name: "Įveskite naujo projekto pavadinimą:"
   new_project: "Sukurti naują projektą"
+  select_inst: "(↑/↓)"
 
 error:
   not_found: "Klaida: failas '{path}' nerastas."
@@ -25,16 +26,15 @@ error:
   unexpected: "Įvyko nenumatyta klaida: {exc}"
 
 wizard:
-  title: "=== FairShare inicijavimo vedlys ==="
   finish: "(Užbaigti ir išsaugoti)"
-  success: "Sėkmė: failas '{path}' sukurtas!"
+  success: "Sėkmė: projektas '{path}' išsaugotas!"
   participants:
     q: "Kas dalyvauja? (vardai atskirti kableliais):"
     error_min: "Klaida: turi būti nurodytas bent vienas dalyvis."
   expenses:
     header: "--- Įrašyti išlaidas ---"
     payer_q: "Kas sumokėjo?"
-    payer_inst: "(Naudokite rodyklių klavišus pasirinkimui)"
+    payer_inst: "(↑/↓)"
     amount_q: "Suma (€):"
     amount_error: "Klaida: įveskite galiojantį skaičių."
     neg_amount_error: "Klaida: suma negali būti neigiama."
@@ -44,7 +44,7 @@ wizard:
     q: "Kaip turėtų būti padalinta suma?"
     all: "Visiems dalyviams"
     custom: "Pasirinkti konkrečius žmones"
-    inst: "(Pasirinkimui naudokite rodyklių klavišus)"
+    inst: "(↑/↓)"
   checkbox:
     q: "Pasirinkite žmones, kurie dalijasi šiomis išlaidomis:"
     inst: "(Tarpas - pažymėti, Enter - patvirtinti)"

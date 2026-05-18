@@ -17,24 +17,24 @@ tui:
   select_project: "Wählen Sie ein Projekt aus oder erstellen Sie ein neues:"
   enter_name: "Geben Sie den Namen für das neue Projekt ein:"
   new_project: "Neues Projekt erstellen"
+  select_inst: "(↑/↓)"
 
-error:
+  error:
   not_found: "Fehler: Die Datei '{path}' wurde nicht gefunden."
   empty: "Fehler: Die Datei '{path}' ist leer."
   yaml: "Fehler beim Lesen der YAML-Datei: {exc}"
   unexpected: "Ein unerwarteter Fehler ist aufgetreten: {exc}"
 
-wizard:
-  title: "=== FairShare Initialisierungs-Assistent ==="
+  wizard:
   finish: "(Beenden und Speichern)"
-  success: "Erfolg: Die Datei '{path}' wurde erstellt!"
+  success: "Erfolg: Das Projekt '{path}' wurde gespeichert!"
   participants:
     q: "Wer nimmt an der Abrechnung teil? (Namen mit Komma getrennt):"
     error_min: "Fehler: Mindestens ein Teilnehmer muss angegeben werden."
   expenses:
     header: "--- Ausgaben erfassen ---"
     payer_q: "Wer hat bezahlt?"
-    payer_inst: "(Nutze die Pfeiltasten zum Auswählen)"
+    payer_inst: "(↑/↓)"
     amount_q: "Betrag in €:"
     amount_error: "Fehler: Bitte eine gültige Zahl eingeben."
     neg_amount_error: "Fehler: Der Betrag darf nicht negativ sein."
@@ -44,9 +44,8 @@ wizard:
     q: "Wie soll der Betrag aufgeteilt werden?"
     all: "Unter ALLEN Teilnehmern"
     custom: "Nur unter bestimmten Personen auswählen"
-    inst: "(Pfeiltasten zur Auswahl)"
-  checkbox:
-    q: "Wähle die Personen aus, die sich diese Ausgabe teilen:"
+    inst: "(↑/↓)"
+
     inst: "(Leertaste zum Markieren, Eingabe zum Bestätigen)"
     error_min: "Fehler: Mindestens eine Person muss ausgewählt werden. Standard: Alle."
 
