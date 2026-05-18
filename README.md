@@ -26,6 +26,14 @@ Bearbeiten Sie die `costs.yaml` nach Ihren Bedürfnissen und führen Sie das Pro
 python3 run.py
 ```
 
+## Tests
+
+Das Projekt enthält Unit-Tests, um die Korrektheit der Berechnungen sicherzustellen. Sie können die Tests mit folgendem Befehl ausführen:
+
+```bash
+python3 -m unittest discover tests
+```
+
 ## YAML-Format
 
 ```yaml
