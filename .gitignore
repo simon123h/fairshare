@@ -6,7 +6,20 @@ __pycache__/
 venv/
 .coverage
 
-# Projekt-spezifisch
+# FairShare: Berichte & PDFs ignorieren
+report.md
+*.pdf
+
+# FairShare: Kosten-Daten (lokal & privat)
+# Wir ignorieren die Standarddatei und alle Dateien, die auf '.costs.yaml' enden.
+# So kannst du z.B. 'urlaub.costs.yaml' nutzen, ohne dass sie eingecheckt wird.
 costs.yaml
-costs-*.yaml
+*.costs.yaml
+
+# Die Vorlage soll jedoch explizit eingecheckt bleiben
+!costs.yaml.example
+
+# Allgemeine Tool-Verzeichnisse
 .cache/
+.mypy_cache/
+.ruff_cache/
