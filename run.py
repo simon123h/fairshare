@@ -40,18 +40,47 @@ def main():
             return
 
         print(f"Teilnehmer: {', '.join(participants)}")
-        print("Ausgaben:")
+        print("\nAusgaben-Details:")
         for e in ledger.expenses:
             print(f"  {e}")
 
         total = sum(e.amount for e in ledger.expenses)
-        print(f"\nGesamtausgaben: {total:.2f}€")
+        print(f"\n{'='*40}")
+        print(f"ZUSAMMENFASSUNG")
+        print(f"{'='*40}")
+        print(f"Gesamtausgaben: {total:.2f}€")
+        print(f"{'-'*40}")
+        
+        # Berechnung der Bilanzen und Einzelwerte
+        balances = ledger.calculate_balances()
+        
+        # Hilfsberechnung für bezahlte Beträge pro Person
+        paid_amounts = {p: 0.0 for p in balances.keys()}
+        for e in ledger.expenses:
+            paid_amounts[e.payer] += e.amount
 
-        # Berechnung über das Ledger-Objekt
+        print(f"{'Name':<15} | {'Bezahlt':>12} | {'Soll-Anteil':>12} | {'Differenz':>12}")
+        print(f"{'-'*60}")
+        
+        for person in sorted(balances.keys()):
+            paid = paid_amounts[person]
+            diff = balances[person]
+            share = paid - diff
+            
+            # Formatierung für perfekte Ausrichtung
+            # Wir trennen das Vorzeichen vom Betrag, um die Dezimalpunkte untereinander zu halten
+            sign = "+" if diff > 0.005 else "-" if diff < -0.005 else " "
+            abs_diff = abs(diff)
+            
+            print(f"{person:<15} | {paid:>10.2f} € | {share:>10.2f} € | {sign} {abs_diff:>8.2f} €")
+
+        print(f"{'='*60}")
+
+        # Ausgleichszahlungen
         settlements = ledger.get_settlements()
-
+        
         if not settlements:
-            print("\nAlles ausgeglichen!")
+            print("\nAlles bereits ausgeglichen!")
         else:
             print("\nVorgeschlagene Zahlungen zum Ausgleich:")
             for s in settlements:
