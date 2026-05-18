@@ -4,7 +4,7 @@ from fairshare.i18n import _, set_language
 
 
 class TestI18n(unittest.TestCase):
-    def test_lithuanian(self):
+    def test_lithuanian(self) -> None:
         set_language("lt")
         self.assertEqual(_("core.participants"), "Dalyviai")
         self.assertEqual(_("core.expenses"), "Išlaidos")
@@ -12,7 +12,7 @@ class TestI18n(unittest.TestCase):
             _("core.pays_to", from_p="A", amount=10, to_p="B"), "A moka 10.00€ asmeniui B"
         )
 
-    def test_japanese(self):
+    def test_japanese(self) -> None:
         set_language("ja")
         self.assertEqual(_("core.participants"), "参加者")
         self.assertEqual(_("core.expenses"), "経費")
@@ -20,7 +20,7 @@ class TestI18n(unittest.TestCase):
             _("core.pays_to", from_p="A", amount=10, to_p="B"), "A が B に 10.00€ 支払います"
         )
 
-    def test_chinese(self):
+    def test_chinese(self) -> None:
         set_language("zh")
         self.assertEqual(_("core.participants"), "参与者")
         self.assertEqual(_("core.expenses"), "费用")
