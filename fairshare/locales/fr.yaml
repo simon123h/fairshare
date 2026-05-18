@@ -1,0 +1,75 @@
+core:
+  participants: "Participants"
+  expenses: "Dépenses"
+  details_header: "Détails des dépenses"
+  summary_header: "RÉSUMÉ GÉNÉRAL"
+  total_spent: "Total dépensé"
+  name: "Nom"
+  paid: "Payé"
+  share: "Part individuelle"
+  diff: "Différence"
+  settlements_header: "Transactions de règlement suggérées"
+  settled_msg: "Tout est déjà réglé !"
+  pays_to: "{from_p} verse {amount:.2f}€ à {to_p}"
+  report_created: "Rapport Markdown créé : {path}"
+
+error:
+  not_found: "Erreur : Le fichier '{path}' est introuvable."
+  empty: "Erreur : Le fichier '{path}' est vide."
+  yaml: "Erreur lors de la lecture du fichier YAML : {exc}"
+  unexpected: "Une erreur inattendue est survenue : {exc}"
+
+wizard:
+  title: "=== Assistant d'initialisation FairShare ==="
+  finish: "(Terminer et enregistrer)"
+  success: "Succès : Le fichier '{path}' a été créé !"
+  participants:
+    q: "Qui participe au règlement ? (noms séparés par des virgules) :"
+    inst: "(ex. Alice, Bob, Charlie)"
+    error_min: "Erreur : Au moins un participant doit être spécifié."
+  expenses:
+    header: "--- Enregistrer les dépenses ---"
+    payer_q: "Qui a payé ?"
+    payer_inst: "(Utilisez les flèches pour sélectionner)"
+    amount_q: "Montant en € :"
+    amount_error: "Erreur : Veuillez saisir un nombre valide."
+    neg_amount_error: "Erreur : Le montant ne peut pas être négatif."
+    desc_q: "Description (optionnel) :"
+    desc_default: "Dépense"
+  split:
+    q: "Comment le montant doit-il être réparti ?"
+    all: "Entre TOUS les participants"
+    custom: "Sélectionner des personnes spécifiques"
+    inst: "(Touches fléchées pour sélectionner)"
+  checkbox:
+    q: "Sélectionnez les personnes qui partagent cette dépense :"
+    inst: "(Espace pour marquer, Entrée pour confirmer)"
+    error_min: "Erreur : Au moins une personne doit être sélectionnée. Par défaut : Tous."
+
+val:
+  neg_amount: "Montant invalide : {amount:.2f}€. Les montants ne peuvent pas être négatifs."
+  invalid_payer: "Un nom valide pour le payeur doit être fourni."
+  empty_beneficiaries: "La dépense '{desc}' n'a pas de bénéficiaires (liste des participants vide)."
+  empty_ledger: "La liste des participants ne peut pas être vide."
+  invalid_names: "Tous les noms des participants doivent être des chaînes de caractères valides."
+  payer_not_in_group: "Erreur de validation : Le payeur '{payer}' n'est pas dans la liste des participants {list}."
+  beneficiary_not_in_group: "Erreur de validation : La personne '{person}' (dans 'split_among' de '{desc}') n'est pas dans la liste des participants."
+
+report:
+  title: "Rapport de règlement FairShare"
+  date: "Créé le"
+  summary: "Résumé"
+  details: "Détails des dépenses"
+  balances: "Bilans"
+  settlements: "Règlements suggérés"
+  no_settlements: "Aucun paiement n'est nécessaire. Tous les comptes sont équilibrés."
+  footer: "Ce rapport a été généré automatiquement par FairShare CLI."
+
+table:
+  payer: "Payeur"
+  amount: "Montant"
+  desc: "Description"
+  split: "Partagé entre"
+  all: "Tous"
+  from: "De"
+  to: "À"

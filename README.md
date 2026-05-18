@@ -17,6 +17,7 @@ Ein einfaches Python-Tool, um Kosten unter mehreren Personen fair aufzuteilen.
 FairShare erkennt automatisch die Systemsprache und passt die Benutzeroberfläche (CLI), den interaktiven Assistenten und die generierten Berichte entsprechend an. Aktuell werden unterstützt:
 
 - **Deutsch** (Standard bei deutscher Systemumgebung)
+- **Französisch** (Standard bei französischer Systemumgebung)
 - **Englisch** (Standard bei allen anderen Umgebungen)
 
 ## Installation
