@@ -34,6 +34,18 @@ Das Projekt enthält Unit-Tests, um die Korrektheit der Berechnungen sicherzuste
 python3 -m unittest discover tests
 ```
 
+## Linting & Formatierung
+
+Dieses Projekt verwendet **Ruff** für schnelles Linting und automatische Code-Formatierung.
+
+```bash
+# Code formatieren
+ruff format .
+
+# Linting-Fehler prüfen und automatisch beheben
+ruff check . --fix
+```
+
 ## YAML-Format
 
 ```yaml

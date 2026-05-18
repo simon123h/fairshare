@@ -1,5 +1,7 @@
 import unittest
+
 from fairshare.expense import Expense
+
 
 class TestExpense(unittest.TestCase):
     def test_initialization(self):
@@ -32,5 +34,6 @@ class TestExpense(unittest.TestCase):
         exp = Expense(payer="Alice", amount=90.0)
         self.assertEqual(exp.calculate_share([]), 0.0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

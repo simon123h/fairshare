@@ -1,12 +1,19 @@
 from typing import List, Optional
 
+
 class Expense:
     """
     Repräsentiert eine einzelne Ausgabe.
     Kapselt Daten und Logik für die Aufteilung.
     """
-    def __init__(self, payer: str, amount: float, description: str = "Ausgabe", 
-                 split_among: Optional[List[str]] = None):
+
+    def __init__(
+        self,
+        payer: str,
+        amount: float,
+        description: str = "Ausgabe",
+        split_among: Optional[List[str]] = None,
+    ):
         self.payer = payer
         self.amount = float(amount)
         self.description = description
