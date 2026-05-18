@@ -1,5 +1,5 @@
 from typing import List, Dict
-from expense import Expense
+from .expense import Expense
 
 def calculate_settlements(expenses: List[Expense], participants: List[str]) -> List[Dict]:
     """

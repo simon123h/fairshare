@@ -1,6 +1,6 @@
 import yaml
-from expense import Expense
-from settlement_logic import calculate_settlements
+from fairshare.expense import Expense
+from fairshare.settlement_logic import calculate_settlements
 
 def main():
     try:

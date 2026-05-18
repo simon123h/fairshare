@@ -1,0 +1,44 @@
+# FairShare CLI
+
+Ein einfaches Python-Tool, um Kosten unter mehreren Personen fair aufzuteilen.
+
+## Struktur
+
+- `fairshare/`: Das Python-Package mit der Logik.
+  - `expense.py`: Definition der `Expense`-Klasse.
+  - `settlement_logic.py`: Der Algorithmus zum Ausgleich der Schulden.
+- `run.py`: Der Einstiegspunkt für das Programm.
+- `costs.yaml`: Die Eingabedatei für Teilnehmer und Ausgaben.
+
+## Installation
+
+Stellen Sie sicher, dass Python installiert ist, und installieren Sie die Abhängigkeiten:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Nutzung
+
+Bearbeiten Sie die `costs.yaml` nach Ihren Bedürfnissen und führen Sie das Programm aus:
+
+```bash
+python3 run.py
+```
+
+## YAML-Format
+
+```yaml
+participants:
+  - Name1
+  - Name2
+
+expenses:
+  - payer: Name1
+    amount: 50.0
+    description: "Einkauf"
+    # Optional: Nur unter bestimmten Personen aufteilen
+    split_among:
+      - Name1
+      - Name2
+```
