@@ -1,143 +1,142 @@
 # FairShare CLI
 
-Ein einfaches Python-Tool, um Kosten unter mehreren Personen fair aufzuteilen.
+A simple Python tool to fairly split expenses among multiple people.
 
-## Struktur
+## Project Structure
 
-- `fairshare/`: Das Python-Package mit der Domain-Logik.
-  - `expense.py`: Definition der `Expense`-Klasse (Datenmodell).
-  - `ledger.py`: Das Hauptbuch (Aggregate) zur Verwaltung von Teilnehmern und Ausgaben.
-  - `report_generator.py`: Logik zur Erzeugung des Markdown-Berichts.
-- `run.py`: Der Einstiegspunkt für das Programm (CLI-Orchestrierung).
-- `costs.yaml.example`: Eine Vorlage für die Eingabedatei.
-- `tests/`: Umfassende Unit-Tests für alle Komponenten.
+- `fairshare/`: The Python package containing the domain logic and i18n resources.
+- `tests/`: Comprehensive unit tests for all components.
+- `run.py`: The entry point for the application.
+- `costs.yaml.example`: A template for the input file.
 
-## Sprache / Multi-language Support
+## Language Support
 
-FairShare erkennt automatisch die Systemsprache und passt die Benutzeroberfläche (CLI), den interaktiven Assistenten und die generierten Berichte entsprechend an. Aktuell werden unterstützt:
+FairShare automatically detects your system language and adjusts the CLI, interactive wizard, and generated reports accordingly. Currently supported languages:
 
-- **Deutsch** (Standard bei deutscher Systemumgebung)
-- **Französisch** (Standard bei französischer Systemumgebung)
-- **Englisch** (Standard bei allen anderen Umgebungen)
+- **English** (Default)
+- **German** (Deutsch)
+- **French** (Français)
+- **Lithuanian** (Lietuvių)
+- **Japanese** (日本語)
+- **Chinese** (中文)
 
 ## Installation
 
-Stellen Sie sicher, dass Python installiert ist, und installieren Sie die Abhängigkeiten:
+Ensure you have Python installed, then install the dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Nutzung
+## Usage
 
-Das Programm kann entweder mit einer bestehenden Datei oder interaktiv gestartet werden.
+The program can be started with an existing file or interactively.
 
-### Bestehende Datei abrechnen
+### Processing an Existing File
 
 ```bash
-# Nutzt standardmäßig 'costs.yaml'
+# Uses 'costs.yaml' by default
 python3 run.py
 
-# Oder geben Sie einen spezifischen Pfad an
-python3 run.py mein-trip.costs.yaml
+# Or specify a specific path
+python3 run.py my-trip.costs.yaml
 ```
 
-### Interaktiver Assistent zum Erstellen einer neuen Datei
+### Interactive Wizard for Creating a New File
 
-Wenn Sie eine neue Abrechnung starten möchten, hilft Ihnen der interaktive Assistent:
+If you want to start a new settlement, use the interactive wizard:
 
 ```bash
-# Erstellt/Initialisiert die Standard-Datei 'costs.yaml'
+# Initializes the default file 'costs.yaml'
 python3 run.py --init
 
-# Erstellt eine benannte Abrechnung (z.B. 'urlaub.costs.yaml')
-python3 run.py urlaub --init
+# Creates a named settlement (e.g., 'vacation.costs.yaml')
+python3 run.py vacation --init
 ```
 
-**Besonderheit:** Das Tool hängt automatisch die Endung `.costs.yaml` an, falls keine Dateiendung angegeben wird. Dies stellt sicher, dass Ihre privaten Daten gemäß der [Git-Konvention](#sicherheit--privatsphäre) geschützt sind.
+**Note:** The tool automatically appends the `.costs.yaml` extension if none is provided. This ensures your private data is protected according to the [Security & Privacy](#security--privacy) section.
 
-Das Skript generiert nach jedem Lauf automatisch einen detaillierten Markdown-Bericht (`report.md`) im aktuellen Verzeichnis.
+After each run, the script automatically generates a detailed Markdown report (`report.md`) in the current directory.
 
-## Sicherheit & Privatsphäre
+## Security & Privacy
 
-Um zu verhindern, dass persönliche Finanzdaten versehentlich in Git-Repositories veröffentlicht werden, nutzt FairShare folgende Sicherheitsmechanismen:
+To prevent accidental publication of personal financial data in Git repositories, FairShare uses the following mechanisms:
 
-1. **Git-Ignore**: Die Datei `.gitignore` ist so vorkonfiguriert, dass die Standarddatei `costs.yaml` sowie alle Dateien mit der Endung `*.costs.yaml` ignoriert werden.
-2. **Namenskonvention**: Nutzen Sie für Ihre Abrechnungen immer die Endung `.costs.yaml` (oder lassen Sie das Tool diese beim `--init` automatisch hinzufügen), damit Ihre Daten lokal auf Ihrem Rechner bleiben.
-3. **Beispiele**: Nutzen Sie `costs.yaml.example` als Vorlage für neue Dateien.
+1. **Git-Ignore**: The `.gitignore` file is pre-configured to ignore the default `costs.yaml` and all files ending in `*.costs.yaml`.
+2. **Naming Convention**: Always use the `.costs.yaml` extension for your settlements to keep your data local.
+3. **Examples**: Use `costs.yaml.example` as a template for new files.
 
-### PDF-Export mit Pandoc
+### PDF Export with Pandoc
 
-Sie können den generierten Markdown-Bericht mit **Pandoc** in ein PDF konvertieren. Mit der Option `geometry` lassen sich die Seitenränder für eine bessere Tabellendarstellung anpassen:
+You can convert the generated Markdown report to PDF using **Pandoc**. Use the `geometry` option to adjust margins for better table display:
 
 ```bash
-# Einfache Konvertierung
-pandoc report.md -V geometry:margin=2cm -o abrechnung.pdf
+# Basic conversion
+pandoc report.md -V geometry:margin=2cm -o settlement.pdf
 
-# Via LaTeX (für ein professionelleres Layout, benötigt xelatex)
-pandoc report.md -V geometry:margin=2cm -o abrechnung.pdf --pdf-engine=xelatex
+# Via LaTeX (for a professional layout, requires xelatex)
+pandoc report.md -V geometry:margin=2cm -o settlement.pdf --pdf-engine=xelatex
 ```
 
-## Entwicklung & Qualitätssicherung
+## Development & Quality Assurance
 
 ### Tests & Coverage
 
-Das Projekt enthält Unit-Tests, um die mathematische Korrektheit der Berechnungen und die Validierungen sicherzustellen.
+The project includes unit tests to ensure mathematical correctness and valid data handling.
 
 ```bash
-# Tests ausführen
+# Run tests
 python3 -m unittest discover tests
 
-# Testabdeckung prüfen
+# Check test coverage
 coverage run -m unittest discover tests
 coverage report -m
 ```
 
-### Linting & Formatierung
+### Linting & Formatting
 
-Dieses Projekt verwendet **Ruff** für extrem schnelles Linting und automatische Code-Formatierung.
+This project uses **Ruff** for fast linting and automatic code formatting.
 
 ```bash
-# Code formatieren
+# Format code
 ruff format .
 
-# Linting-Fehler prüfen und automatisch beheben
+# Check and fix linting errors
 ruff check . --fix
 ```
 
 ### CI/CD
 
-Das Projekt ist für professionelle Workflows vorbereitet und enthält Konfigurationen für **GitLab CI/CD** (`.gitlab-ci.yml`) und **GitHub Actions** (`.github/workflows/ci.yml`). Bei jedem Push werden automatisch:
+Configurations for **GitLab CI/CD** (`.gitlab-ci.yml`) and **GitHub Actions** (`.github/workflows/ci.yml`) are included. Each push automatically triggers:
 
-1. Das Linting und die Formatierung (Ruff) geprüft.
-2. Alle Unit-Tests ausgeführt.
-3. Die Code-Coverage ermittelt.
+1. Linting and formatting checks (Ruff).
+2. Unit tests.
+3. Code coverage reports.
 
-## YAML-Format
+## YAML Format
 
-Die Eingabedaten werden standardmäßig in `costs.yaml` verwaltet.
+Input data is managed in `costs.yaml`.
 
-### Struktur
+### Structure
 
 ```yaml
-# Liste aller Personen, die standardmäßig an allen Ausgaben beteiligt sind
+# List of all people participating by default
 participants:
   - Name1
   - Name2
   - Name3
 
-# Liste der einzelnen Ausgaben
+# List of individual expenses
 expenses:
-  - payer: Name1 # Wer hat bezahlt?
-    amount: 50.0 # Wie viel wurde bezahlt?
-    description: "Einkauf" # Optional: Was wurde gekauft?
+  - payer: Name1 # Who paid?
+    amount: 50.0 # How much?
+    description: "Groceries" # Optional
 
-    # Optional: Nur unter bestimmten Personen aufteilen.
-    # Wenn dieses Feld fehlt, wird die Ausgabe unter ALLEN Teilnehmern
-    # aus der obigen 'participants' Liste aufgeteilt.
+    # Optional: Split among specific people only.
+    # If omitted, it is split among ALL participants listed above.
     split_among:
       - Name1
       - Name2
 ```
 
-Ein ausführliches Beispiel mit verschiedenen Szenarien finden Sie in der Datei [costs.yaml.example](costs.yaml.example).
+See [costs.yaml.example](costs.yaml.example) for a detailed example.
