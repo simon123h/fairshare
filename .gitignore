@@ -11,9 +11,8 @@ report.md
 *.pdf
 
 # FairShare: Kosten-Daten (lokal & privat)
-# Wir ignorieren die Standarddatei und alle Dateien, die auf '.costs.yaml' enden.
-# So kannst du z.B. 'urlaub.costs.yaml' nutzen, ohne dass sie eingecheckt wird.
-costs.yaml
+# We ignore all files ending in '.costs.yaml'.
+# This allows you to use e.g. 'vacation.costs.yaml' without committing it.
 *.costs.yaml
 
 # Die Vorlage soll jedoch explizit eingecheckt bleiben

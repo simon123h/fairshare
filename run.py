@@ -11,25 +11,23 @@ from fairshare.wizard import InteractiveWizard
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="FairShare: Kosten unter Personen aufteilen.")
+    parser = argparse.ArgumentParser(description="FairShare: Split costs among people.")
     parser.add_argument(
-        "file",
-        nargs="?",
-        default="costs.yaml",
-        help="Pfad zur YAML-Datei mit den Ausgaben (Standard: costs.yaml)",
+        "project",
+        help="Name of the project/trip or path to the YAML file.",
     )
     parser.add_argument(
-        "--report", default="report.md", help="Pfad für den Markdown-Bericht (Standard: report.md)"
+        "--report", default="report.md", help="Path for the Markdown report (default: report.md)"
     )
     parser.add_argument(
         "--init",
         action="store_true",
-        help="Startet den interaktiven Assistenten zum Erstellen einer neuen Datei.",
+        help="Starts the interactive wizard to create a new project file.",
     )
     args = parser.parse_args()
 
-    # Automatisches Suffix hinzufügen, falls es fehlt und es keine .example Datei ist
-    input_file = args.file
+    # Automatically add suffix if it's missing and it's not a .yaml/.yml file
+    input_file = args.project
     if (
         not input_file.endswith(".costs.yaml")
         and not input_file.endswith(".yaml")
@@ -37,10 +35,10 @@ def main() -> None:
     ):
         input_file += ".costs.yaml"
 
-    # Interaktiver Modus
+    # Interactive mode
     if args.init:
         InteractiveWizard.run(input_file)
-        # Wir fahren fort, um die Datei direkt abzurechnen und den Bericht zu erstellen
+        # We continue to process the file and generate the report directly
 
     try:
         with open(input_file, "r", encoding="utf-8") as file:
@@ -53,10 +51,10 @@ def main() -> None:
         participants: List[str] = data.get("participants", [])
         expenses_data: List[Dict[str, Any]] = data.get("expenses", [])
 
-        # Initialisierung des Ledgers
+        # Ledger initialization
         ledger = Ledger(participants)
 
-        # Hinzufügen der Ausgaben
+        # Adding expenses
         for e_data in expenses_data:
             expense = Expense(
                 payer=e_data["payer"],
@@ -70,7 +68,7 @@ def main() -> None:
             print(_("error.empty", path=input_file))
             return
 
-        # Konsolen-Ausgabe
+        # Console output
         print(f"{_('core.participants')}: {', '.join(participants)}")
         total = sum(e.amount for e in ledger.expenses)
         print(f"\n{_('core.total_spent')}: {total:.2f}€")
@@ -80,7 +78,7 @@ def main() -> None:
         for e in ledger.expenses:
             paid_amounts[e.payer] += e.amount
 
-        # Header-Labels abrufen für Tabellenausrichtung
+        # Retrieve header labels for table alignment
         h_name, h_paid = _("core.name"), _("core.paid")
         h_share, h_diff = _("core.share"), _("core.diff")
 
@@ -102,7 +100,7 @@ def main() -> None:
             for s in settlements:
                 print(f"  {_('core.pays_to', from_p=s['from'], amount=s['amount'], to_p=s['to'])}")
 
-        # Bericht-Generierung
+        # Report generation
         ReportGenerator.generate_markdown(ledger, settlements, args.report)
         print(f"\n{_('core.report_created', path=args.report)}")
 

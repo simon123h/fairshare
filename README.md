@@ -12,37 +12,31 @@ pip install -r requirements.txt
 
 ## Usage
 
-The program can be started with an existing file or interactively.
+The program must be started with a project name or a path to a file. It can also be used interactively to create a new project.
 
-### Processing an Existing File
+### Processing an Existing Project
 
 ```bash
-# Uses 'costs.yaml' by default
-python3 run.py
-
-# Or specify a specific path
+# Specify the project name
 python3 run.py my-trip
 ```
 
-### Interactive Wizard for Creating a New File
+### Interactive Wizard for Creating a New Project
 
 If you want to start a new settlement, use the interactive wizard:
 
 ```bash
-# Initializes the default file 'costs.yaml'
-python3 run.py --init
-
-# Creates a named settlement (e.g., 'vacation.costs.yaml')
+# Creates/Initializes a project
 python3 run.py vacation --init
 ```
 
-**Note:** The tool automatically appends the `.costs.yaml` extension if none is provided. This ensures all data files are ignored from the git repository.
+**Note:** The tool automatically appends the `.costs.yaml` extension to the data file. This ensures all data files are ignored from the git repository.
 
 After each run, the script automatically generates a detailed Markdown report (`report.md`) in the current directory.
 
 ## YAML Format
 
-Input data is managed in `costs.yaml`.
+Input data is managed in YAML files (e.g., `my-trip.costs.yaml`).
 
 ```yaml
 # List of all people participating by default
