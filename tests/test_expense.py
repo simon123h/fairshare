@@ -32,7 +32,8 @@ class TestExpense(unittest.TestCase):
 
     def test_calculate_share_empty(self):
         exp = Expense(payer="Alice", amount=90.0)
-        self.assertEqual(exp.calculate_share([]), 0.0)
+        with self.assertRaisesRegex(ValueError, "Teilnehmerliste leer"):
+            exp.calculate_share([])
 
 
 if __name__ == "__main__":

@@ -10,11 +10,37 @@ class Ledger:
     """
 
     def __init__(self, participants: List[str]):
+        if not participants:
+            raise ValueError("Die Teilnehmerliste darf nicht leer sein.")
+
+        # Validierung: Keine leeren Strings als Namen
+        if any(not p or not isinstance(p, str) for p in participants):
+            raise ValueError("Alle Teilnehmernamen müssen gültige Zeichenfolgen sein.")
+
         self.participants = participants
         self.expenses: List[Expense] = []
 
     def add_expense(self, expense: Expense):
-        """Fügt eine neue Ausgabe zum Ledger hinzu."""
+        """
+        Fügt eine neue Ausgabe zum Ledger hinzu.
+        Validiert, ob Zahler und Empfänger Teil der Teilnehmergruppe sind.
+        """
+        # Fail-Fast: Ist der Zahler in der Gruppe?
+        if expense.payer not in self.participants:
+            raise ValueError(
+                f"Validierungsfehler: Zahler '{expense.payer}' ist nicht in der "
+                f"Teilnehmerliste {self.participants} enthalten."
+            )
+
+        # Fail-Fast: Sind alle spezifischen Empfänger in der Gruppe?
+        if expense.split_among:
+            for person in expense.split_among:
+                if person not in self.participants:
+                    raise ValueError(
+                        f"Validierungsfehler: Person '{person}' (in 'split_among' von "
+                        f"'{expense.description}') ist nicht in der Teilnehmerliste enthalten."
+                    )
+
         self.expenses.append(expense)
 
     def calculate_balances(self) -> Dict[str, float]:
@@ -22,14 +48,7 @@ class Ledger:
         Berechnet die Netto-Bilanz für jeden Teilnehmer.
         Positiv: Person bekommt Geld. Negativ: Person schuldet Geld.
         """
-        # Alle involvierten Personen (Initialteilnehmer + alle aus den Ausgaben)
-        all_people = set(self.participants)
-        for e in self.expenses:
-            all_people.add(e.payer)
-            if e.split_among:
-                all_people.update(e.split_among)
-
-        balances = {p: 0.0 for p in all_people}
+        balances = {p: 0.0 for p in self.participants}
 
         for e in self.expenses:
             # Gutschrift für den Zahler
