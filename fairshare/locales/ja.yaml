@@ -1,0 +1,75 @@
+core:
+  participants: "参加者"
+  expenses: "経費"
+  details_header: "経費詳細"
+  summary_header: "総計"
+  total_spent: "支出合計"
+  name: "名前"
+  paid: "支払額"
+  share: "負担額"
+  diff: "差額"
+  settlements_header: "推奨される精算"
+  settled_msg: "すべて精算済みです！"
+  pays_to: "{from_p} が {to_p} に {amount:.2f}€ 支払います"
+  report_created: "Markdownレポートが作成されました: {path}"
+
+error:
+  not_found: "エラー: ファイル '{path}' が見つかりません。"
+  empty: "エラー: ファイル '{path}' が空です。"
+  yaml: "YAMLファイルの読み込みエラー: {exc}"
+  unexpected: "予期しないエラーが発生しました: {exc}"
+
+wizard:
+  title: "=== FairShare 初期設定ウィザード ==="
+  finish: "(終了して保存)"
+  success: "成功: ファイル '{path}' が作成されました！"
+  participants:
+    q: "参加者は誰ですか？ (名前をカンマで区切ってください):"
+    inst: "(例: Alice, Bob, Charlie)"
+    error_min: "エラー: 少なくとも1人の参加者を指定する必要があります。"
+  expenses:
+    header: "--- 経費の記録 ---"
+    payer_q: "誰が支払いましたか？"
+    payer_inst: "(矢印キーで選択)"
+    amount_q: "金額 (€):"
+    amount_error: "エラー: 有効な数字を入力してください。"
+    neg_amount_error: "エラー: 金額を負にすることはできません。"
+    desc_q: "説明 (任意):"
+    desc_default: "経費"
+  split:
+    q: "金額をどのように分割しますか？"
+    all: "全員で分割"
+    custom: "特定の人を選択"
+    inst: "(矢印キーで選択)"
+  checkbox:
+    q: "この経費を負担する人を選択してください:"
+    inst: "(スペースで選択、Enterで確定)"
+    error_min: "エラー: 少なくとも1人を選択する必要があります。デフォルト: 全員"
+
+val:
+  neg_amount: "無効な金額: {amount:.2f}€。金額を負にすることはできません。"
+  invalid_payer: "有効な支払者の名前を入力してください。"
+  empty_beneficiaries: "経費 '{desc}' に負担者がいません (参加者リストが空です)。"
+  empty_ledger: "参加者リストを空にすることはできません。"
+  invalid_names: "すべての参加者名は有効な文字列である必要があります。"
+  payer_not_in_group: "検証エラー: 支払者 '{payer}' が参加者リスト {list} に含まれていません。"
+  beneficiary_not_in_group: "検証エラー: '{desc}' の 'split_among' に含まれる '{person}' が参加者リストに含まれていません。"
+
+report:
+  title: "FairShare 精算レポート"
+  date: "作成日"
+  summary: "概要"
+  details: "経費詳細"
+  balances: "収支"
+  settlements: "推奨される精算"
+  no_settlements: "支払いの必要はありません。すべての収支が一致しています。"
+  footer: "このレポートは FairShare CLI によって自動生成されました。"
+
+table:
+  payer: "支払者"
+  amount: "金額"
+  desc: "説明"
+  split: "負担者"
+  all: "全員"
+  from: "支払元"
+  to: "支払先"

@@ -13,7 +13,7 @@ _TRANSLATIONS_CACHE: Dict[str, Dict[str, Any]] = {}
 
 
 def get_system_lang() -> str:
-    """Ermittelt die Systemsprache (de oder en). Standard: en."""
+    """Ermittelt die Systemsprache. Standard: en."""
     try:
         # Versuche Systemsprache zu ermitteln
         lang_code = locale.getdefaultlocale()[0]
@@ -25,10 +25,12 @@ def get_system_lang() -> str:
 
     # Fallback auf Umgebungsvariablen
     env_lang = os.environ.get("LANG", "en")
-    if env_lang.startswith("de"):
-        return "de"
+    if "_" in env_lang:
+        return env_lang.split("_")[0].lower()
+    if "." in env_lang:
+        return env_lang.split(".")[0].lower()
 
-    return "en"
+    return env_lang.lower()
 
 
 # Aktuelle Sprache festlegen

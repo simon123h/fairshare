@@ -1,0 +1,75 @@
+core:
+  participants: "Dalyviai"
+  expenses: "Išlaidos"
+  details_header: "Išlaidų informacija"
+  summary_header: "BENDRA SUVESTINĖ"
+  total_spent: "Iš viso išleista"
+  name: "Vardas"
+  paid: "Sumokėjo"
+  share: "Dalis"
+  diff: "Skirtumas"
+  settlements_header: "Siūlomos atsiskaitymo operacijos"
+  settled_msg: "Viskas jau atsiskaityta!"
+  pays_to: "{from_p} moka {amount:.2f}€ asmeniui {to_p}"
+  report_created: "Markdown ataskaita sukurta: {path}"
+
+error:
+  not_found: "Klaida: failas '{path}' nerastas."
+  empty: "Klaida: failas '{path}' yra tuščias."
+  yaml: "Klaida skaitant YAML failą: {exc}"
+  unexpected: "Įvyko nenumatyta klaida: {exc}"
+
+wizard:
+  title: "=== FairShare inicijavimo vedlys ==="
+  finish: "(Užbaigti ir išsaugoti)"
+  success: "Sėkmė: failas '{path}' sukurtas!"
+  participants:
+    q: "Kas dalyvauja? (vardai atskirti kableliais):"
+    inst: "(pvz., Alisa, Bobas, Čarlis)"
+    error_min: "Klaida: turi būti nurodytas bent vienas dalyvis."
+  expenses:
+    header: "--- Įrašyti išlaidas ---"
+    payer_q: "Kas sumokėjo?"
+    payer_inst: "(Naudokite rodyklių klavišus pasirinkimui)"
+    amount_q: "Suma (€):"
+    amount_error: "Klaida: įveskite galiojantį skaičių."
+    neg_amount_error: "Klaida: suma negali būti neigiama."
+    desc_q: "Aprašymas (neprivaloma):"
+    desc_default: "Išlaidos"
+  split:
+    q: "Kaip turėtų būti padalinta suma?"
+    all: "Visiems dalyviams"
+    custom: "Pasirinkti konkrečius žmones"
+    inst: "(Pasirinkimui naudokite rodyklių klavišus)"
+  checkbox:
+    q: "Pasirinkite žmones, kurie dalijasi šiomis išlaidomis:"
+    inst: "(Tarpas - pažymėti, Enter - patvirtinti)"
+    error_min: "Klaida: turi būti pasirinktas bent vienas asmuo. Numatytasis: visi."
+
+val:
+  neg_amount: "Neteisinga suma: {amount:.2f}€. Sumos negali būti neigiamos."
+  invalid_payer: "Turi būti nurodytas teisingas mokėtojo vardas."
+  empty_beneficiaries: "Išlaidos '{desc}' neturi gavėjų (dalyvių sąrašas tuščias)."
+  empty_ledger: "Dalyvių sąrašas negali būti tuščias."
+  invalid_names: "Visi dalyvių vardai turi būti teisingos eilutės."
+  payer_not_in_group: "Validavimo klaida: Mokėtojo '{payer}' nėra dalyvių sąraše {list}."
+  beneficiary_not_in_group: "Validavimo klaida: Asmens '{person}' (skiltyje 'split_among' ties '{desc}') nėra dalyvių sąraše."
+
+report:
+  title: "FairShare atsiskaitymo ataskaita"
+  date: "Sukurta"
+  summary: "Suvestinė"
+  details: "Išlaidų informacija"
+  balances: "Balansai"
+  settlements: "Siūlomi atsiskaitymai"
+  no_settlements: "Mokėjimų nereikia. Visos sąskaitos subalansuotos."
+  footer: "Šią ataskaitą automatiškai sugeneravo FairShare CLI."
+
+table:
+  payer: "Mokėtojas"
+  amount: "Suma"
+  desc: "Aprašymas"
+  split: "Pasidalinta tarp"
+  all: "Visi"
+  from: "Nuo"
+  to: "Kam"
