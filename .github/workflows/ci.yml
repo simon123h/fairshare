@@ -76,8 +76,6 @@ jobs:
           - os: macos-latest
             platform: macos
     runs-on: ${{ matrix.os }}
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -107,13 +105,34 @@ jobs:
           cd dist
           Compress-Archive -Path fairshare.exe -DestinationPath fairshare-${{ github.ref_name }}-windows.zip
 
-      - name: Release
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fairshare-binaries-${{ matrix.platform }}
+          path: |
+            dist/*.tar.gz
+            dist/*.zip
+          retention-days: 1
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          pattern: fairshare-binaries-*
+          merge-multiple: true
+
+      - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             dist/fairshare-*.tar.gz
             dist/fairshare-*.zip
-          fail_on_unmatched_files: false
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
