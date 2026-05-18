@@ -60,4 +60,8 @@ pandoc report.md -V geometry:margin=2cm -o settlement.pdf
 
 ---
 
-_For development, project structure, or building the executable, please see [ARCHITECTURE.md](ARCHITECTURE.md), [CONTRIBUTING.md](CONTRIBUTING.md), and [BUILD.md](docs/BUILD.md)._
+For development, project structure, or building the executable, please see:
+
+- [ARCHITECTURE.md](ARCHITECTURE.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [BUILD.md](docs/BUILD.md)
