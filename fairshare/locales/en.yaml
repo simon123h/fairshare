@@ -39,7 +39,6 @@ wizard:
     amount_error: "Error: Please enter a valid number."
     neg_amount_error: "Error: Amount cannot be negative."
     desc_q: "Description (optional):"
-    desc_default: "Expense"
   split:
     q: "How should the amount be split?"
     all: "Among ALL participants"

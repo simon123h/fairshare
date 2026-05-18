@@ -39,7 +39,6 @@ wizard:
     amount_error: "Fehler: Bitte eine gültige Zahl eingeben."
     neg_amount_error: "Fehler: Der Betrag darf nicht negativ sein."
     desc_q: "Beschreibung (optional):"
-    desc_default: "Ausgabe"
   split:
     q: "Wie soll der Betrag aufgeteilt werden?"
     all: "Unter ALLEN Teilnehmern"

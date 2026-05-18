@@ -88,7 +88,6 @@ class InteractiveWizard:
 
             description = questionary.text(
                 _("wizard.expenses.desc_q"),
-                default=_("wizard.expenses.desc_default"),
                 qmark=">",
                 style=InteractiveWizard.custom_style,
             ).ask()

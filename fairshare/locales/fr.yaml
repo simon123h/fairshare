@@ -39,7 +39,6 @@ wizard:
     amount_error: "Erreur : Veuillez saisir un nombre valide."
     neg_amount_error: "Erreur : Le montant ne peut pas être négatif."
     desc_q: "Description (optionnel) :"
-    desc_default: "Dépense"
   split:
     q: "Comment le montant doit-il être réparti ?"
     all: "Entre TOUS les participants"

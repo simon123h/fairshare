@@ -39,7 +39,6 @@ wizard:
     amount_error: "错误：请输入有效数字。"
     neg_amount_error: "错误：金额不能为负数。"
     desc_q: "描述 (可选):"
-    desc_default: "费用"
   split:
     q: "金额应如何分摊？"
     all: "所有参与者平摊"

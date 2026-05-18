@@ -39,7 +39,6 @@ wizard:
     amount_error: "エラー: 有効な数字を入力してください。"
     neg_amount_error: "エラー: 金額を負にすることはできません。"
     desc_q: "説明 (任意):"
-    desc_default: "経費"
   split:
     q: "金額をどのように分割しますか？"
     all: "全員で分割"

@@ -39,7 +39,6 @@ wizard:
     amount_error: "Klaida: įveskite galiojantį skaičių."
     neg_amount_error: "Klaida: suma negali būti neigiama."
     desc_q: "Aprašymas (neprivaloma):"
-    desc_default: "Išlaidos"
   split:
     q: "Kaip turėtų būti padalinta suma?"
     all: "Visiems dalyviams"

@@ -13,7 +13,7 @@ class Expense:
         self,
         payer: str,
         amount: float,
-        description: str = "Ausgabe",
+        description: str = "",
         split_among: Optional[List[str]] = None,
     ) -> None:
         if amount < 0:
