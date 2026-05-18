@@ -25,29 +25,6 @@ python3 run.py
 
 After each run, the script automatically generates a detailed Markdown report (`report.md`) in the current directory.
 
-## YAML Format
-
-Input data is managed in YAML files (e.g., `fairshare-data/my-trip.costs.yaml`).
-
-```yaml
-# List of all people participating by default
-participants:
-  - Alice
-  - Bob
-  - Charlie
-
-# List of individual expenses
-expenses:
-  - payer: Alice
-    amount: 50.0
-    description: "Groceries"
-
-    # Optional: Split among specific people only.
-    split_among:
-      - Alice
-      - Bob
-```
-
 ## Language Support
 
 FairShare automatically detects your system language and adjusts the CLI, interactive wizard, and generated reports accordingly. Currently supported languages:

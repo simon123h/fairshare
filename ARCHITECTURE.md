@@ -20,3 +20,27 @@ This document describes the high-level architecture and project structure of Fai
 - **Separation of Concerns:** Domain logic is kept separate from the CLI presentation layer.
 - **i18n First:** All user-facing strings are externalized into locale files.
 - **Data Integrity:** Strict validation ensures that expenses and participant lists are always in a consistent state.
+
+## Data Format
+
+Project data is stored in YAML files within the `fairshare-data/` directory.
+
+```yaml
+# List of all people participating by default
+participants:
+  - Alice
+  - Bob
+  - Charlie
+
+# List of individual expenses
+expenses:
+  - payer: Alice
+    amount: 50.0
+    description: "Groceries"
+
+    # Optional: Split among specific people only.
+    # If omitted, the expense is split among ALL participants.
+    split_among:
+      - Alice
+      - Bob
+```
