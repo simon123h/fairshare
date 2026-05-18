@@ -1,10 +1,10 @@
 import argparse
-import sys
 from typing import Any, Dict, List
 
 import yaml
 
 from fairshare.expense import Expense
+from fairshare.i18n import _
 from fairshare.ledger import Ledger
 from fairshare.report_generator import ReportGenerator
 from fairshare.wizard import InteractiveWizard
@@ -36,14 +36,6 @@ def main() -> None:
         and not input_file.endswith(".yml")
     ):
         input_file += ".costs.yaml"
-    elif (
-        input_file.endswith(".yaml")
-        and not input_file.endswith(".costs.yaml")
-        and not input_file.endswith(".example")
-    ):
-        # Optional: Konvertiere .yaml zu .costs.yaml für bessere Git-Ignorierung,
-        # aber nur wenn vom User gewünscht. Hier bleiben wir bei der expliziten Logik:
-        pass
 
     # Interaktiver Modus
     if args.init:
@@ -51,12 +43,11 @@ def main() -> None:
         # Wir fahren fort, um die Datei direkt abzurechnen und den Bericht zu erstellen
 
     try:
-
         with open(input_file, "r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
 
         if not data:
-            print(f"Fehler: Die Datei '{input_file}' ist leer.")
+            print(_("error.empty", path=input_file))
             return
 
         participants: List[str] = data.get("participants", [])
@@ -70,26 +61,30 @@ def main() -> None:
             expense = Expense(
                 payer=e_data["payer"],
                 amount=e_data["amount"],
-                description=e_data.get("description", None),
+                description=e_data.get("description", _("wizard.expenses.desc_default")),
                 split_among=e_data.get("split_among"),
             )
             ledger.add_expense(expense)
 
         if not participants and not ledger.expenses:
-            print(f"Fehler: Keine Teilnehmer oder Ausgaben in '{args.file}' gefunden.")
+            print(_("error.empty", path=input_file))
             return
 
         # Konsolen-Ausgabe
-        print(f"Teilnehmer: {', '.join(participants)}")
+        print(f"{_('core.participants')}: {', '.join(participants)}")
         total = sum(e.amount for e in ledger.expenses)
-        print(f"\nGesamtausgaben: {total:.2f}€")
+        print(f"\n{_('core.total_spent')}: {total:.2f}€")
 
         balances = ledger.calculate_balances()
         paid_amounts = {p: 0.0 for p in balances.keys()}
         for e in ledger.expenses:
             paid_amounts[e.payer] += e.amount
 
-        print(f"\n{'Name':<15} | {'Bezahlt':>12} | {'Soll-Anteil':>12} | {'Differenz':>12}")
+        # Header-Labels abrufen für Tabellenausrichtung
+        h_name, h_paid = _("core.name"), _("core.paid")
+        h_share, h_diff = _("core.share"), _("core.diff")
+
+        print(f"\n{h_name:<15} | {h_paid:>12} | {h_share:>12} | {h_diff:>12}")
         print(f"{'-' * 60}")
         for person in sorted(balances.keys()):
             paid = paid_amounts[person]
@@ -101,22 +96,22 @@ def main() -> None:
 
         settlements = ledger.get_settlements()
         if not settlements:
-            print("\nAlles bereits ausgeglichen!")
+            print(f"\n{_('core.settled_msg')}")
         else:
-            print("\nVorgeschlagene Zahlungen zum Ausgleich:")
+            print(f"\n{_('core.settlements_header')}:")
             for s in settlements:
-                print(f"  {s['from']} zahlt {s['amount']:.2f}€ an {s['to']}")
+                print(f"  {_('core.pays_to', from_p=s['from'], amount=s['amount'], to_p=s['to'])}")
 
         # Bericht-Generierung
         ReportGenerator.generate_markdown(ledger, settlements, args.report)
-        print(f"\nMarkdown-Bericht wurde erstellt: {args.report}")
+        print(f"\n{_('core.report_created', path=args.report)}")
 
     except FileNotFoundError:
-        print(f"Fehler: Die Datei '{args.file}' wurde nicht gefunden.")
+        print(_("error.not_found", path=input_file))
     except yaml.YAMLError as exc:
-        print(f"Fehler beim Lesen der YAML-Datei: {exc}")
+        print(_("error.yaml", exc=exc))
     except Exception as e:
-        print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
+        print(_("error.unexpected", exc=e))
 
 
 if __name__ == "__main__":

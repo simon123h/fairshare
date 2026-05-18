@@ -27,6 +27,9 @@ python_version = "3.12"
 strict = true
 ignore_missing_imports = true
 
+[tool.setuptools.package-data]
+fairshare = ["locales/*.yaml"]
+
 [tool.ruff]
 line-length = 100
 

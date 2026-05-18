@@ -1,5 +1,7 @@
 from typing import List, Optional
 
+from .i18n import _
+
 
 class Expense:
     """
@@ -13,14 +15,12 @@ class Expense:
         amount: float,
         description: str = "Ausgabe",
         split_among: Optional[List[str]] = None,
-    ):
+    ) -> None:
         if amount < 0:
-            raise ValueError(
-                f"Ungültiger Betrag: {amount:.2f}€. Beträge dürfen nicht negativ sein."
-            )
+            raise ValueError(_("val.neg_amount", amount=amount))
 
         if not payer or not isinstance(payer, str):
-            raise ValueError("Ein gültiger Name für den Zahler muss angegeben werden.")
+            raise ValueError(_("val.invalid_payer"))
 
         self.payer = payer
         self.amount = float(amount)
@@ -31,9 +31,7 @@ class Expense:
         """Gibt die Liste der Personen zurück, die an dieser Ausgabe beteiligt sind."""
         beneficiaries = self.split_among if self.split_among else default_participants
         if not beneficiaries:
-            raise ValueError(
-                f"Ausgabe '{self.description}' hat keine Empfänger (Teilnehmerliste leer)."
-            )
+            raise ValueError(_("val.empty_beneficiaries", desc=self.description))
         return beneficiaries
 
     def calculate_share(self, default_participants: List[str]) -> float:
@@ -43,5 +41,14 @@ class Expense:
 
     def __str__(self) -> str:
         """Erzeugt eine lesbare Zusammenfassung der Ausgabe."""
-        split_info = f" (geteilt unter: {', '.join(self.split_among)})" if self.split_among else ""
-        return f"{self.payer} hat {self.amount:.2f}€ für '{self.description}' bezahlt{split_info}"
+        split_info = ""
+        if self.split_among:
+            split_info = f" ({_('table.split')}: {', '.join(self.split_among)})"
+
+        # Übersetzungsteile abrufen
+        p_label = _("core.paid").lower()
+        d_label = _("table.desc").lower()
+
+        return (
+            f"{self.payer} {p_label} {self.amount:.2f}€ {d_label} '{self.description}'{split_info}"
+        )

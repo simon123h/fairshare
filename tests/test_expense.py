@@ -1,9 +1,14 @@
 import unittest
 
 from fairshare.expense import Expense
+from fairshare.i18n import set_language
 
 
 class TestExpense(unittest.TestCase):
+    def setUp(self) -> None:
+        # Für Tests erzwingen wir Deutsch, um die Assertions stabil zu halten
+        set_language("de")
+
     def test_initialization(self) -> None:
         exp = Expense(payer="Alice", amount=100.0, description="Test", split_among=["Alice", "Bob"])
         self.assertEqual(exp.payer, "Alice")

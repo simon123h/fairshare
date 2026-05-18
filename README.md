@@ -12,6 +12,13 @@ Ein einfaches Python-Tool, um Kosten unter mehreren Personen fair aufzuteilen.
 - `costs.yaml.example`: Eine Vorlage für die Eingabedatei.
 - `tests/`: Umfassende Unit-Tests für alle Komponenten.
 
+## Sprache / Multi-language Support
+
+FairShare erkennt automatisch die Systemsprache und passt die Benutzeroberfläche (CLI), den interaktiven Assistenten und die generierten Berichte entsprechend an. Aktuell werden unterstützt:
+
+- **Deutsch** (Standard bei deutscher Systemumgebung)
+- **Englisch** (Standard bei allen anderen Umgebungen)
+
 ## Installation
 
 Stellen Sie sicher, dass Python installiert ist, und installieren Sie die Abhängigkeiten:
@@ -100,6 +107,7 @@ ruff check . --fix
 ### CI/CD
 
 Das Projekt ist für professionelle Workflows vorbereitet und enthält Konfigurationen für **GitLab CI/CD** (`.gitlab-ci.yml`) und **GitHub Actions** (`.github/workflows/ci.yml`). Bei jedem Push werden automatisch:
+
 1. Das Linting und die Formatierung (Ruff) geprüft.
 2. Alle Unit-Tests ausgeführt.
 3. Die Code-Coverage ermittelt.
@@ -119,10 +127,10 @@ participants:
 
 # Liste der einzelnen Ausgaben
 expenses:
-  - payer: Name1          # Wer hat bezahlt?
-    amount: 50.0          # Wie viel wurde bezahlt?
+  - payer: Name1 # Wer hat bezahlt?
+    amount: 50.0 # Wie viel wurde bezahlt?
     description: "Einkauf" # Optional: Was wurde gekauft?
-    
+
     # Optional: Nur unter bestimmten Personen aufteilen.
     # Wenn dieses Feld fehlt, wird die Ausgabe unter ALLEN Teilnehmern
     # aus der obigen 'participants' Liste aufgeteilt.

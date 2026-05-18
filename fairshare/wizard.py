@@ -5,11 +5,13 @@ import questionary
 import yaml
 from questionary import Style
 
+from .i18n import _
+
 
 class InteractiveWizard:
     """
     Ein interaktiver Assistent zum Erstellen einer neuen Kosten-Datei.
-    Nutzt 'questionary' mit angepasstem deutschen Stil.
+    Nutzt 'questionary' mit angepasstem I18N-Stil.
     """
 
     # Benutzerdefinierter Stil für die Prompts
@@ -27,14 +29,15 @@ class InteractiveWizard:
 
     @staticmethod
     def run(output_path: str) -> None:
-        print("\n=== FairShare Initialisierungs-Assistent ===\n")
+        print(f"\n{_('wizard_title')}\n")
 
         # 1. Teilnehmer abfragen
         while True:
             p_input = questionary.text(
-                "Wer nimmt an der Abrechnung teil? (Namen mit Komma getrennt):",
+                _("wizard_participants_q"),
                 qmark=">",
                 style=InteractiveWizard.custom_style,
+                instruction=_("wizard_participants_inst"),
             ).ask()
 
             if p_input is None:
@@ -43,30 +46,30 @@ class InteractiveWizard:
             participants = [p.strip() for p in p_input.split(",") if p.strip()]
             if participants:
                 break
-            print("Fehler: Mindestens ein Teilnehmer muss angegeben werden.")
+            print(_("wizard_min_participants"))
 
         expenses: List[Dict[str, Any]] = []
 
         # 2. Ausgaben abfragen
-        print("\n--- Ausgaben erfassen ---")
+        print(f"\n{_('wizard_expenses_header')}")
         while True:
             # Auswahl des Zahlers per Liste
-            payer_options = ["(Beenden und Speichern)"] + participants
+            payer_options = [_("wizard_finish")] + participants
             payer = questionary.select(
-                "Wer hat bezahlt?",
+                _("wizard_payer_q"),
                 choices=payer_options,
                 qmark=">",
                 style=InteractiveWizard.custom_style,
-                instruction="(Nutze die Pfeiltasten zum Auswählen)",
+                instruction=_("wizard_payer_inst"),
             ).ask()
 
-            if payer is None or payer == "(Beenden und Speichern)":
+            if payer is None or payer == _("wizard_finish"):
                 break
 
             # Betrag abfragen
             while True:
                 amount_str = questionary.text(
-                    "Betrag in €:",
+                    _("wizard_amount_q"),
                     qmark=">",
                     style=InteractiveWizard.custom_style,
                 ).ask()
@@ -76,14 +79,15 @@ class InteractiveWizard:
                 try:
                     amount = float(amount_str.replace(",", "."))
                     if amount < 0:
-                        print("Fehler: Der Betrag darf nicht negativ sein.")
+                        print(_("wizard_neg_amount_error"))
                         continue
                     break
                 except ValueError:
-                    print("Fehler: Bitte eine gültige Zahl eingeben.")
+                    print(_("wizard_amount_error"))
 
             description = questionary.text(
-                "Beschreibung (optional):",
+                _("wizard_desc_q"),
+                default=_("wizard_desc_default"),
                 qmark=">",
                 style=InteractiveWizard.custom_style,
             ).ask()
@@ -92,34 +96,34 @@ class InteractiveWizard:
 
             # Aufteilung festlegen
             split_type = questionary.select(
-                "Wie soll der Betrag aufgeteilt werden?",
+                _("wizard_split_q"),
                 choices=[
-                    "Unter ALLEN Teilnehmern",
-                    "Nur unter bestimmten Personen auswählen",
+                    _("wizard_split_all"),
+                    _("wizard_split_custom"),
                 ],
                 qmark=">",
                 style=InteractiveWizard.custom_style,
-                instruction="(Pfeiltasten zur Auswahl)",
+                instruction=_("wizard_split_inst"),
             ).ask()
 
             if split_type is None:
                 sys.exit(0)
 
             split_among: Optional[List[str]] = None
-            if split_type == "Nur unter bestimmten Personen auswählen":
+            if split_type == _("wizard_split_custom"):
                 split_among = questionary.checkbox(
-                    "Wähle die Personen aus, die sich diese Ausgabe teilen:",
+                    _("wizard_checkbox_q"),
                     choices=participants,
                     qmark=">",
                     style=InteractiveWizard.custom_style,
-                    instruction="(Leertaste zum Markieren, Eingabe zum Bestätigen)",
+                    instruction=_("wizard_checkbox_inst"),
                 ).ask()
 
                 if split_among is None:
                     sys.exit(0)
 
                 if not split_among:
-                    print("Fehler: Mindestens eine Person muss ausgewählt werden. Standard: Alle.")
+                    print(_("wizard_min_beneficiary"))
                     split_among = None
 
             expense_dict: Dict[str, Any] = {
@@ -132,14 +136,12 @@ class InteractiveWizard:
 
             expenses.append(expense_dict)
 
-            print()
-
         # 3. Speichern
         data = {"participants": participants, "expenses": expenses}
 
         try:
             with open(output_path, "w", encoding="utf-8") as f:
                 yaml.dump(data, f, sort_keys=False, allow_unicode=True)
-            print(f"\nErfolg: Die Datei '{output_path}' wurde erstellt!")
+            print(f"\n{_('wizard_success', path=output_path)}")
         except Exception as e:
-            print(f"Fehler beim Speichern der Datei: {e}")
+            print(_("error_unexpected", exc=e))

@@ -1,10 +1,14 @@
 import unittest
 
 from fairshare.expense import Expense
+from fairshare.i18n import set_language
 from fairshare.ledger import Ledger
 
 
 class TestSettlementLogic(unittest.TestCase):
+    def setUp(self) -> None:
+        set_language("de")
+
     def test_simple_even_split(self) -> None:
         ledger = Ledger(["Alice", "Bob"])
         ledger.add_expense(Expense(payer="Alice", amount=100.0))

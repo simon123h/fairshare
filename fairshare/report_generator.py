@@ -1,5 +1,6 @@
 from typing import Any, Dict, List
 
+from .i18n import _
 from .ledger import Ledger
 
 
@@ -21,25 +22,31 @@ class ReportGenerator:
         for e in ledger.expenses:
             paid_amounts[e.payer] += e.amount
 
+        # Tabellen-Header übersetzen
+        payer_l = _("table.payer")
+        amount_l = _("table.amount")
+        desc_l = _("table.desc")
+        split_l = _("table.split")
+
         lines = [
-            "## Details der Ausgaben",
+            f"## {_('report.details')}",
             "",
-            f"**Gesamtausgaben:** {total_spent:.2f} €",
+            f"**{_('core.total_spent')}:** {total_spent:.2f} €",
             "",
-            "| Zahler | Betrag | Beschreibung | Geteilt unter |",
+            f"| {payer_l} | {amount_l} | {desc_l} | {split_l} |",
             "| :--- | :--- | :--- | :--- |",
         ]
 
         for e in ledger.expenses:
-            beneficiaries = ", ".join(e.split_among) if e.split_among else "Alle"
+            beneficiaries = ", ".join(e.split_among) if e.split_among else _("table.all")
             lines.append(f"| {e.payer} | {e.amount:.2f} € | {e.description} | {beneficiaries} |")
 
         lines.extend(
             [
                 "",
-                "## Bilanzen",
+                f"## {_('report.balances')}",
                 "",
-                "| Name | Bezahlt | Soll-Anteil | Differenz |",
+                f"| {_('core.name')} | {_('core.paid')} | {_('core.share')} | {_('core.diff')} |",
                 "| :--- | :------: | :---------: | :---------: |",
             ]
         )
@@ -53,12 +60,12 @@ class ReportGenerator:
                 f"| {person} | {paid:.2f} € | {share:.2f} € | **{status}{abs(diff):.2f} €** |"
             )
 
-        lines.extend(["", "## Vorgeschlagene Ausgleichszahlungen", ""])
+        lines.extend(["", f"## {_('report.settlements')}", ""])
 
         if not settlements:
-            lines.append("Es sind keine Zahlungen notwendig. Alle Konten sind ausgeglichen.")
+            lines.append(_("report.no_settlements"))
         else:
-            lines.append("| Von | An | Betrag |")
+            lines.append(f"| {_('table.from')} | {_('table.to')} | {_('table.amount')} |")
             lines.append("| :--- | :--- | :--- |")
             for s in settlements:
                 lines.append(f"| {s['from']} | {s['to']} | **{s['amount']:.2f} €** |")

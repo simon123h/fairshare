@@ -1,10 +1,15 @@
 import unittest
 
 from fairshare.expense import Expense
+from fairshare.i18n import set_language
 from fairshare.ledger import Ledger
 
 
 class TestValidations(unittest.TestCase):
+    def setUp(self) -> None:
+        # Für Tests erzwingen wir Deutsch
+        set_language("de")
+
     def test_negative_amount(self) -> None:
         with self.assertRaisesRegex(ValueError, "Ungültiger Betrag"):
             Expense(payer="Alice", amount=-10.0)

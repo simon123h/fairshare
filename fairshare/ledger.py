@@ -1,6 +1,7 @@
 from typing import Any, Dict, List
 
 from .expense import Expense
+from .i18n import _
 
 
 class Ledger:
@@ -11,11 +12,11 @@ class Ledger:
 
     def __init__(self, participants: List[str]):
         if not participants:
-            raise ValueError("Die Teilnehmerliste darf nicht leer sein.")
+            raise ValueError(_("val.empty_ledger"))
 
         # Validierung: Keine leeren Strings als Namen
         if any(not p or not isinstance(p, str) for p in participants):
-            raise ValueError("Alle Teilnehmernamen müssen gültige Zeichenfolgen sein.")
+            raise ValueError(_("val.invalid_names"))
 
         self.participants = participants
         self.expenses: List[Expense] = []
@@ -28,8 +29,7 @@ class Ledger:
         # Fail-Fast: Ist der Zahler in der Gruppe?
         if expense.payer not in self.participants:
             raise ValueError(
-                f"Validierungsfehler: Zahler '{expense.payer}' ist nicht in der "
-                f"Teilnehmerliste {self.participants} enthalten."
+                _("val.payer_not_in_group", payer=expense.payer, list=self.participants)
             )
 
         # Fail-Fast: Sind alle spezifischen Empfänger in der Gruppe?
@@ -37,8 +37,7 @@ class Ledger:
             for person in expense.split_among:
                 if person not in self.participants:
                     raise ValueError(
-                        f"Validierungsfehler: Person '{person}' (in 'split_among' von "
-                        f"'{expense.description}') ist nicht in der Teilnehmerliste enthalten."
+                        _("val.beneficiary_not_in_group", person=person, desc=expense.description)
                     )
 
         self.expenses.append(expense)
