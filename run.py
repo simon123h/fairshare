@@ -28,17 +28,34 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    # Automatisches Suffix hinzufügen, falls es fehlt und es keine .example Datei ist
+    input_file = args.file
+    if (
+        not input_file.endswith(".costs.yaml")
+        and not input_file.endswith(".yaml")
+        and not input_file.endswith(".yml")
+    ):
+        input_file += ".costs.yaml"
+    elif (
+        input_file.endswith(".yaml")
+        and not input_file.endswith(".costs.yaml")
+        and not input_file.endswith(".example")
+    ):
+        # Optional: Konvertiere .yaml zu .costs.yaml für bessere Git-Ignorierung,
+        # aber nur wenn vom User gewünscht. Hier bleiben wir bei der expliziten Logik:
+        pass
+
     # Interaktiver Modus
     if args.init:
-        InteractiveWizard.run(args.file)
+        InteractiveWizard.run(input_file)
         sys.exit(0)
 
     try:
-        with open(args.file, "r", encoding="utf-8") as file:
+        with open(input_file, "r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
 
         if not data:
-            print(f"Fehler: Die Datei '{args.file}' ist leer.")
+            print(f"Fehler: Die Datei '{input_file}' ist leer.")
             return
 
         participants: List[str] = data.get("participants", [])
