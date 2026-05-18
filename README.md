@@ -4,11 +4,13 @@ Ein einfaches Python-Tool, um Kosten unter mehreren Personen fair aufzuteilen.
 
 ## Struktur
 
-- `fairshare/`: Das Python-Package mit der Logik.
-  - `expense.py`: Definition der `Expense`-Klasse.
-  - `settlement_logic.py`: Der Algorithmus zum Ausgleich der Schulden.
-- `run.py`: Der Einstiegspunkt für das Programm.
-- `costs.yaml`: Die Eingabedatei für Teilnehmer und Ausgaben.
+- `fairshare/`: Das Python-Package mit der Domain-Logik.
+  - `expense.py`: Definition der `Expense`-Klasse (Datenmodell).
+  - `ledger.py`: Das Hauptbuch (Aggregate) zur Verwaltung von Teilnehmern und Ausgaben.
+  - `report_generator.py`: Logik zur Erzeugung des Markdown-Berichts.
+- `run.py`: Der Einstiegspunkt für das Programm (CLI-Orchestrierung).
+- `costs.yaml.example`: Eine Vorlage für die Eingabedatei.
+- `tests/`: Umfassende Unit-Tests für alle Komponenten.
 
 ## Installation
 
@@ -20,21 +22,21 @@ pip install -r requirements.txt
 
 ## Nutzung
 
-Bearbeiten Sie die `costs.yaml` nach Ihren Bedürfnissen und führen Sie das Programm aus:
+Bearbeiten Sie die `costs.yaml` (oder nutzen Sie die Vorlage) und führen Sie das Programm aus:
 
 ```bash
 # Nutzt standardmäßig 'costs.yaml'
 python3 run.py
-```bash
+
 # Oder geben Sie einen spezifischen Pfad an
 python3 run.py meine_kosten.yaml
 ```
 
-Das Skript generiert automatisch einen Markdown-Bericht (`report.md`), der eine tabellarische Zusammenfassung und alle Details enthält.
+Das Skript generiert automatisch einen detaillierten Markdown-Bericht (`report.md`) im aktuellen Verzeichnis.
 
 ### PDF-Export mit Pandoc
 
-Sie können den generierten Markdown-Bericht mit **Pandoc** in ein PDF konvertieren. Mit der Option `-V geometry:margin=2cm` lassen sich die Seitenränder anpassen:
+Sie können den generierten Markdown-Bericht mit **Pandoc** in ein PDF konvertieren. Mit der Option `geometry` lassen sich die Seitenränder für eine bessere Tabellendarstellung anpassen:
 
 ```bash
 # Einfache Konvertierung
@@ -44,18 +46,24 @@ pandoc report.md -V geometry:margin=2cm -o abrechnung.pdf
 pandoc report.md -V geometry:margin=2cm -o abrechnung.pdf --pdf-engine=xelatex
 ```
 
-## Tests
+## Entwicklung & Qualitätssicherung
 
+### Tests & Coverage
 
-Das Projekt enthält Unit-Tests, um die Korrektheit der Berechnungen sicherzustellen. Sie können die Tests mit folgendem Befehl ausführen:
+Das Projekt enthält Unit-Tests, um die mathematische Korrektheit der Berechnungen und die Validierungen sicherzustellen.
 
 ```bash
+# Tests ausführen
 python3 -m unittest discover tests
+
+# Testabdeckung prüfen
+coverage run -m unittest discover tests
+coverage report -m
 ```
 
-## Linting & Formatierung
+### Linting & Formatierung
 
-Dieses Projekt verwendet **Ruff** für schnelles Linting und automatische Code-Formatierung.
+Dieses Projekt verwendet **Ruff** für extrem schnelles Linting und automatische Code-Formatierung.
 
 ```bash
 # Code formatieren
@@ -65,16 +73,16 @@ ruff format .
 ruff check . --fix
 ```
 
-## CI/CD
+### CI/CD
 
-Das Projekt enthält Konfigurationen für **GitLab CI/CD** (`.gitlab-ci.yml`) und **GitHub Actions** (`.github/workflows/ci.yml`). Die Pipelines führen automatisch folgende Schritte bei jedem Push aus:
-1. **Linting**: Prüfung durch Ruff auf Code-Qualität und Formatierung.
-2. **Tests**: Ausführung aller Unit-Tests.
-
+Das Projekt ist für professionelle Workflows vorbereitet und enthält Konfigurationen für **GitLab CI/CD** (`.gitlab-ci.yml`) und **GitHub Actions** (`.github/workflows/ci.yml`). Bei jedem Push werden automatisch:
+1. Das Linting und die Formatierung (Ruff) geprüft.
+2. Alle Unit-Tests ausgeführt.
+3. Die Code-Coverage ermittelt.
 
 ## YAML-Format
 
-Die Eingabedaten werden in der Datei `costs.yaml` verwaltet. Eine Vorlage finden Sie in `costs.yaml.example`.
+Die Eingabedaten werden standardmäßig in `costs.yaml` verwaltet.
 
 ### Struktur
 
@@ -99,6 +107,4 @@ expenses:
       - Name2
 ```
 
-### Beispiel
-
-Ein ausführliches Beispiel mit verschiedenen Szenarien (vollständige Aufteilung vs. Teil-Aufteilung) finden Sie in der Datei [costs.yaml.example](costs.yaml.example).
+Ein ausführliches Beispiel mit verschiedenen Szenarien finden Sie in der Datei [costs.yaml.example](costs.yaml.example).
