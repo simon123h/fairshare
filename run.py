@@ -48,9 +48,10 @@ def main() -> None:
     # Interaktiver Modus
     if args.init:
         InteractiveWizard.run(input_file)
-        sys.exit(0)
+        # Wir fahren fort, um die Datei direkt abzurechnen und den Bericht zu erstellen
 
     try:
+
         with open(input_file, "r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
 
