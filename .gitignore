@@ -8,4 +8,5 @@ venv/
 
 # Projekt-spezifisch
 costs.yaml
+costs-*.yaml
 .cache/
