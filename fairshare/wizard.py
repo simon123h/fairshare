@@ -10,20 +10,20 @@ from .i18n import _
 
 class InteractiveWizard:
     """
-    Ein interaktiver Assistent zum Erstellen einer neuen Kosten-Datei.
-    Nutzt 'questionary' mit angepasstem I18N-Stil.
+    An interactive wizard for creating or updating project files.
+    Uses 'questionary' with customized i18n styles.
     """
 
-    # Benutzerdefinierter Stil für die Prompts
+    # Custom style for prompts
     custom_style = Style(
         [
-            ("qmark", "fg:#673ab7 bold"),  # Das Präfix-Zeichen (unser '>')
-            ("question", "bold"),  # Die eigentliche Frage
-            ("answer", "fg:#f44336 bold"),  # Die gegebene Antwort
-            ("pointer", "fg:#673ab7 bold"),  # Der Auswahl-Pointer
-            ("highlighted", "fg:#673ab7 bold"),  # Markierter Text
-            ("selected", "fg:#ccff00"),  # Ausgewählte Option
-            ("instruction", "fg:#888888"),  # Hilfetexte
+            ("qmark", "fg:#673ab7 bold"),  # The prefix character (our '>')
+            ("question", "bold"),  # The actual question
+            ("answer", "fg:#f44336 bold"),  # The given answer
+            ("pointer", "fg:#673ab7 bold"),  # The selection pointer
+            ("highlighted", "fg:#673ab7 bold"),  # Highlighted text
+            ("selected", "fg:#ccff00"),  # Selected option
+            ("instruction", "fg:#888888"),  # Help texts
         ]
     )
 
@@ -33,7 +33,7 @@ class InteractiveWizard:
             participants = existing_data.get("participants", [])
             expenses = existing_data.get("expenses", [])
         else:
-            # 1. Teilnehmer abfragen
+            # 1. Ask for participants
             while True:
                 p_input = questionary.text(
                     _("wizard.participants.q"),
@@ -51,10 +51,10 @@ class InteractiveWizard:
 
             expenses = []
 
-        # 2. Ausgaben abfragen
+        # 2. Ask for expenses
         print(f"\n{_('wizard.expenses.header')}")
         while True:
-            # Auswahl des Zahlers per Liste
+            # Payer selection via list
             payer_options = [_("wizard.finish")] + participants
             payer = questionary.select(
                 _("wizard.expenses.payer_q"),
@@ -67,7 +67,7 @@ class InteractiveWizard:
             if payer is None or payer == _("wizard.finish"):
                 break
 
-            # Betrag abfragen
+            # Ask for amount
             while True:
                 amount_str = questionary.text(
                     _("wizard.expenses.amount_q"),
@@ -95,7 +95,7 @@ class InteractiveWizard:
             if description is None:
                 sys.exit(0)
 
-            # Aufteilung festlegen
+            # Determine split
             split_type = questionary.select(
                 _("wizard.split.q"),
                 choices=[
@@ -137,7 +137,7 @@ class InteractiveWizard:
 
             expenses.append(expense_dict)
 
-        # 3. Speichern
+        # 3. Save
         data = {"participants": participants, "expenses": expenses}
 
         try:

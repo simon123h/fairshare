@@ -19,13 +19,13 @@ tui:
   new_project: "Neues Projekt erstellen"
   select_inst: "(↑/↓)"
 
-  error:
+error:
   not_found: "Fehler: Die Datei '{path}' wurde nicht gefunden."
   empty: "Fehler: Die Datei '{path}' ist leer."
   yaml: "Fehler beim Lesen der YAML-Datei: {exc}"
   unexpected: "Ein unerwarteter Fehler ist aufgetreten: {exc}"
 
-  wizard:
+wizard:
   finish: "(Beenden und Speichern)"
   success: "Erfolg: Das Projekt '{path}' wurde gespeichert!"
   participants:
@@ -45,7 +45,8 @@ tui:
     all: "Unter ALLEN Teilnehmern"
     custom: "Nur unter bestimmten Personen auswählen"
     inst: "(↑/↓)"
-
+  checkbox:
+    q: "Wähle die Personen aus, die sich diese Ausgabe teilen:"
     inst: "(Leertaste zum Markieren, Eingabe zum Bestätigen)"
     error_min: "Fehler: Mindestens eine Person muss ausgewählt werden. Standard: Alle."
 
