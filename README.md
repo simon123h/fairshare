@@ -18,16 +18,16 @@ FairShare features a full Terminal UI. Simply start the program, and it will gui
 python3 run.py
 ```
 
-- **Select a project:** Choose from existing `*.costs.yaml` files in the current directory.
-- **Create a new project:** Select the `[FairShare Initialization Wizard]` option and enter a name for your new project.
+- **Select a project:** Choose from existing `*.costs.yaml` files in the `fairshare-data/` directory.
+- **Create a new project:** Select the `[FairShare Initialization Wizard]` option and enter a name. The file will be saved in the `fairshare-data/` directory.
 
-**Note:** The tool automatically appends the `.costs.yaml` extension to the data file. This ensures all data files are ignored from the git repository.
+**Note:** The tool automatically appends the `.costs.yaml` extension to project names. All project data is stored in the `fairshare-data/` folder.
 
 After each run, the script automatically generates a detailed Markdown report (`report.md`) in the current directory.
 
 ## YAML Format
 
-Input data is managed in YAML files (e.g., `my-trip.costs.yaml`).
+Input data is managed in YAML files (e.g., `fairshare-data/my-trip.costs.yaml`).
 
 ```yaml
 # List of all people participating by default
@@ -47,8 +47,6 @@ expenses:
       - Alice
       - Bob
 ```
-
-See [costs.yaml.example](costs.yaml.example) for a detailed example.
 
 ## Language Support
 

@@ -11,16 +11,24 @@ from fairshare.report_generator import ReportGenerator
 from fairshare.wizard import InteractiveWizard
 
 
+DATA_DIR = Path("fairshare-data")
+
 def get_available_projects() -> List[str]:
-    """Scans the current directory for *.costs.yaml files."""
+    """Scans the data directory for *.costs.yaml files."""
+    if not DATA_DIR.exists():
+        return []
+    
     projects = []
-    for file in os.listdir("."):
+    for file in os.listdir(DATA_DIR):
         if file.endswith(".costs.yaml"):
             projects.append(file)
     return sorted(projects)
 
 
 def main() -> None:
+    # Ensure data directory exists
+    DATA_DIR.mkdir(exist_ok=True)
+    
     projects = get_available_projects()
 
     # TUI Choice: Select existing or create new
@@ -43,12 +51,13 @@ def main() -> None:
         ).ask()
         if not project_name:
             return
-        input_file = project_name
-        if not input_file.endswith(".costs.yaml"):
-            input_file += ".costs.yaml"
-        InteractiveWizard.run(input_file)
+        filename = project_name
+        if not filename.endswith(".costs.yaml"):
+            filename += ".costs.yaml"
+        input_file = DATA_DIR / filename
+        InteractiveWizard.run(str(input_file))
     else:
-        input_file = choice
+        input_file = DATA_DIR / choice
 
     try:
         with open(input_file, "r", encoding="utf-8") as file:

@@ -11,6 +11,7 @@ This document describes the high-level architecture and project structure of Fai
   - `wizard.py`: Implementation of the interactive initialization wizard.
   - `i18n.py`: Internationalization support and language detection.
   - `locales/`: YAML files containing translations for various languages.
+- `fairshare-data/`: Directory where all user settlement files (`*.costs.yaml`) are stored.
 - `tests/`: Comprehensive unit tests covering domain logic, validations, and i18n.
 - `run.py`: The entry point script that orchestrates the CLI flow.
 

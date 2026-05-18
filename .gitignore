@@ -11,12 +11,8 @@ report.md
 *.pdf
 
 # FairShare: Kosten-Daten (lokal & privat)
-# We ignore all files ending in '.costs.yaml'.
-# This allows you to use e.g. 'vacation.costs.yaml' without committing it.
-*.costs.yaml
-
-# Die Vorlage soll jedoch explizit eingecheckt bleiben
-!costs.yaml.example
+# All project data is stored in the fairshare-data/ directory and ignored from git.
+fairshare-data/
 
 # Allgemeine Tool-Verzeichnisse
 .cache/
