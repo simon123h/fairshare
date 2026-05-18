@@ -5,23 +5,36 @@ from typing import List, Dict
 def calculate_settlements(expenses: List[Dict], participants: List[str]) -> List[Dict]:
     """
     Berechnet die minimalen Transaktionen, um Schulden auszugleichen.
+    Unterstützt jetzt individuelle Aufteilungen pro Ausgabe.
     """
-    if not participants:
-        return []
-
-    total_spent = sum(e['amount'] for e in expenses)
-    share_per_person = total_spent / len(participants)
-    
-    balances = {p: 0.0 for p in participants}
+    # Alle involvierten Personen sammeln (Teilnehmer + Zahler/Empfänger aus Ausgaben)
+    all_people = set(participants)
     for e in expenses:
-        if e['payer'] not in balances:
-            print(f"Warnung: Zahler '{e['payer']}' ist nicht in der Teilnehmerliste!")
-            continue
-        balances[e['payer']] += e['amount']
+        all_people.add(e['payer'])
+        if 'split_among' in e:
+            all_people.update(e['split_among'])
+            
+    balances = {p: 0.0 for p in all_people}
     
-    for p in balances:
-        balances[p] -= share_per_person
+    for e in expenses:
+        payer = e['payer']
+        amount = float(e['amount'])
         
+        # Wer teilt sich diese Ausgabe? (Standard: alle Teilnehmer)
+        beneficiaries = e.get('split_among', participants)
+        
+        if not beneficiaries:
+            continue
+            
+        # Dem Zahler gutschreiben
+        balances[payer] += amount
+        
+        # Den Empfängern (Nutznießern) belasten
+        share = amount / len(beneficiaries)
+        for b in beneficiaries:
+            balances[b] -= share
+            
+    # Schuldner und Gläubiger trennen
     debtors = []
     creditors = []
     
@@ -33,6 +46,7 @@ def calculate_settlements(expenses: List[Dict], participants: List[str]) -> List
             
     settlements = []
     
+    # Gieriger Ausgleichsalgorithmus
     i, j = 0, 0
     while i < len(debtors) and j < len(creditors):
         debtor_name, debt_amount = debtors[i]
@@ -65,25 +79,33 @@ def main():
         participants = data.get('participants', [])
         expenses = data.get('expenses', [])
         
-        if not participants:
-            print("Fehler: Keine Teilnehmer in 'costs.yaml' gefunden.")
+        if not participants and not expenses:
+            print("Fehler: Keine Teilnehmer oder Ausgaben in 'costs.yaml' gefunden.")
             return
 
         print(f"Teilnehmer: {', '.join(participants)}")
         print("Ausgaben:")
         for e in expenses:
-            print(f"  {e['payer']} hat {e['amount']:.2f}€ bezahlt")
+            p = e['payer']
+            a = float(e['amount'])
+            desc = e.get('description', 'Ausgabe')
+            
+            # Info über spezielle Aufteilung
+            split_info = ""
+            if 'split_among' in e:
+                split_info = f" (geteilt unter: {', '.join(e['split_among'])})"
+            
+            print(f"  {p} hat {a:.2f}€ für '{desc}' bezahlt{split_info}")
         
-        total = sum(e['amount'] for e in expenses)
+        total = sum(float(e['amount']) for e in expenses)
         print(f"\nGesamtausgaben: {total:.2f}€")
-        print(f"Anteil pro Person: {total / len(participants):.2f}€\n")
         
         settlements = calculate_settlements(expenses, participants)
         
         if not settlements:
-            print("Alles ausgeglichen!")
+            print("\nAlles ausgeglichen!")
         else:
-            print("Vorgeschlagene Zahlungen zum Ausgleich:")
+            print("\nVorgeschlagene Zahlungen zum Ausgleich:")
             for s in settlements:
                 print(f"  {s['from']} zahlt {s['amount']:.2f}€ an {s['to']}")
                 
@@ -92,7 +114,9 @@ def main():
     except yaml.YAMLError as exc:
         print(f"Fehler beim Lesen der YAML-Datei: {exc}")
     except Exception as e:
+        import traceback
         print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main()
