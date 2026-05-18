@@ -1,1 +1,10 @@
-__pycache__
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Projekt-spezifisch
+costs.yaml
+.cache/

@@ -55,17 +55,31 @@ Das Projekt enthält Konfigurationen für **GitLab CI/CD** (`.gitlab-ci.yml`) un
 
 ## YAML-Format
 
+Die Eingabedaten werden in der Datei `costs.yaml` verwaltet. Eine Vorlage finden Sie in `costs.yaml.example`.
+
+### Struktur
+
 ```yaml
+# Liste aller Personen, die standardmäßig an allen Ausgaben beteiligt sind
 participants:
   - Name1
   - Name2
+  - Name3
 
+# Liste der einzelnen Ausgaben
 expenses:
-  - payer: Name1
-    amount: 50.0
-    description: "Einkauf"
-    # Optional: Nur unter bestimmten Personen aufteilen
+  - payer: Name1          # Wer hat bezahlt?
+    amount: 50.0          # Wie viel wurde bezahlt?
+    description: "Einkauf" # Optional: Was wurde gekauft?
+    
+    # Optional: Nur unter bestimmten Personen aufteilen.
+    # Wenn dieses Feld fehlt, wird die Ausgabe unter ALLEN Teilnehmern
+    # aus der obigen 'participants' Liste aufgeteilt.
     split_among:
       - Name1
       - Name2
 ```
+
+### Beispiel
+
+Ein ausführliches Beispiel mit verschiedenen Szenarien (vollständige Aufteilung vs. Teil-Aufteilung) finden Sie in der Datei [costs.yaml.example](costs.yaml.example).
