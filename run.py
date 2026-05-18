@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Any, Dict, List
 
 import questionary
@@ -10,14 +11,14 @@ from fairshare.ledger import Ledger
 from fairshare.report_generator import ReportGenerator
 from fairshare.wizard import InteractiveWizard
 
-
 DATA_DIR = Path("fairshare-data")
+
 
 def get_available_projects() -> List[str]:
     """Scans the data directory for *.costs.yaml files."""
     if not DATA_DIR.exists():
         return []
-    
+
     projects = []
     for file in os.listdir(DATA_DIR):
         if file.endswith(".costs.yaml"):
@@ -28,7 +29,7 @@ def get_available_projects() -> List[str]:
 def main() -> None:
     # Ensure data directory exists
     DATA_DIR.mkdir(exist_ok=True)
-    
+
     projects = get_available_projects()
 
     # TUI Choice: Select existing or create new

@@ -1,12 +1,17 @@
 import locale
 import os
+import sys
 from pathlib import Path
 from typing import Any, Dict, Optional
 
 import yaml
 
-# Pfad zum locales-Ordner auflösen
-LOCALES_DIR = Path(__file__).parent / "locales"
+# Resolve the path to the locales folder
+# When running as a PyInstaller bundle, sys._MEIPASS points to the temp directory
+if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+    LOCALES_DIR = Path(sys._MEIPASS) / "fairshare" / "locales"
+else:
+    LOCALES_DIR = Path(__file__).parent / "locales"
 
 # Zwischenspeicher für geladene Übersetzungen
 _TRANSLATIONS_CACHE: Dict[str, Dict[str, Any]] = {}
