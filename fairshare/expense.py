@@ -41,7 +41,7 @@ class Expense:
         beneficiaries = self.get_beneficiaries(default_participants)
         return self.amount / len(beneficiaries)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Erzeugt eine lesbare Zusammenfassung der Ausgabe."""
         split_info = f" (geteilt unter: {', '.join(self.split_among)})" if self.split_among else ""
         return f"{self.payer} hat {self.amount:.2f}€ für '{self.description}' bezahlt{split_info}"

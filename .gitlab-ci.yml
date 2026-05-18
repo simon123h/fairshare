@@ -4,7 +4,6 @@ stages:
 
 image: python:3.12
 
-# Cache für pip-Pakete, um die Pipeline zu beschleunigen
 cache:
   paths:
     - .cache/pip
@@ -15,9 +14,8 @@ variables:
 before_script:
   - python --version
   - pip install -r requirements.txt
-  - pip install ruff
+  - pip install ruff mypy types-PyYAML
 
-# Stage: Linting & Formatting
 ruff-lint:
   stage: lint
   script:
@@ -25,7 +23,12 @@ ruff-lint:
     - ruff format --check .
   allow_failure: false
 
-# Stage: Unit Tests
+mypy-typecheck:
+  stage: lint
+  script:
+    - mypy .
+  allow_failure: false
+
 unit-tests:
   stage: test
   script:

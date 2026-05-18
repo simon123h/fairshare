@@ -5,21 +5,21 @@ from fairshare.ledger import Ledger
 
 
 class TestSettlementLogic(unittest.TestCase):
-    def test_simple_even_split(self):
+    def test_simple_even_split(self) -> None:
         ledger = Ledger(["Alice", "Bob"])
         ledger.add_expense(Expense(payer="Alice", amount=100.0))
         settlements = ledger.get_settlements()
         self.assertEqual(len(settlements), 1)
         self.assertEqual(settlements[0], {"from": "Bob", "to": "Alice", "amount": 50.0})
 
-    def test_already_balanced(self):
+    def test_already_balanced(self) -> None:
         ledger = Ledger(["Alice", "Bob"])
         ledger.add_expense(Expense(payer="Alice", amount=50.0))
         ledger.add_expense(Expense(payer="Bob", amount=50.0))
         settlements = ledger.get_settlements()
         self.assertEqual(len(settlements), 0)
 
-    def test_partial_split(self):
+    def test_partial_split(self) -> None:
         ledger = Ledger(["Alice", "Bob", "Charlie"])
         ledger.add_expense(Expense(payer="Alice", amount=60.0, split_among=["Bob", "Charlie"]))
         settlements = ledger.get_settlements()
@@ -32,7 +32,7 @@ class TestSettlementLogic(unittest.TestCase):
             self.assertEqual(s["to"], "Alice")
             self.assertEqual(s["amount"], 30.0)
 
-    def test_complex_scenario(self):
+    def test_complex_scenario(self) -> None:
         ledger = Ledger(["Alice", "Bob", "Charlie", "David"])
         ledger.add_expense(Expense(payer="Alice", amount=100.0))
         ledger.add_expense(Expense(payer="Bob", amount=20.0))

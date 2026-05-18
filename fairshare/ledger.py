@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from .expense import Expense
 
@@ -20,7 +20,7 @@ class Ledger:
         self.participants = participants
         self.expenses: List[Expense] = []
 
-    def add_expense(self, expense: Expense):
+    def add_expense(self, expense: Expense) -> None:
         """
         Fügt eine neue Ausgabe zum Ledger hinzu.
         Validiert, ob Zahler und Empfänger Teil der Teilnehmergruppe sind.
@@ -62,25 +62,27 @@ class Ledger:
 
         return balances
 
-    def get_settlements(self) -> List[Dict]:
+    def get_settlements(self) -> List[Dict[str, Any]]:
         """
         Ermittelt die minimalen Transaktionen, um alle Bilanzen auszugleichen.
         """
         balances = self.calculate_balances()
 
-        debtors = []
-        creditors = []
+        debtors: List[List[Any]] = []
+        creditors: List[List[Any]] = []
         for p, b in balances.items():
             if b < -0.01:
                 debtors.append([p, abs(b)])
             elif b > 0.01:
                 creditors.append([p, b])
 
-        settlements = []
+        settlements: List[Dict[str, Any]] = []
         i, j = 0, 0
         while i < len(debtors) and j < len(creditors):
-            debtor_name, debt_amount = debtors[i]
-            creditor_name, credit_amount = creditors[j]
+            debtor_name: str = debtors[i][0]
+            debt_amount: float = debtors[i][1]
+            creditor_name: str = creditors[j][0]
+            credit_amount: float = creditors[j][1]
 
             settle_amount = min(debt_amount, credit_amount)
             if settle_amount > 0.01:

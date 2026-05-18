@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from .ledger import Ledger
 
@@ -6,10 +6,13 @@ from .ledger import Ledger
 class ReportGenerator:
     """
     Erzeugt einen detaillierten Abrechnungsbericht im Markdown-Format.
+    Layout angepasst an die manuellen Änderungen des Users.
     """
 
     @staticmethod
-    def generate_markdown(ledger: Ledger, settlements: List[Dict], output_path: str = "report.md"):
+    def generate_markdown(
+        ledger: Ledger, settlements: List[Dict[str, Any]], output_path: str = "report.md"
+    ) -> str:
         balances = ledger.calculate_balances()
         total_spent = sum(e.amount for e in ledger.expenses)
 
