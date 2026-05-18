@@ -1,3 +1,4 @@
+import argparse
 import yaml
 
 from fairshare.expense import Expense
@@ -5,8 +6,17 @@ from fairshare.ledger import Ledger
 
 
 def main():
+    parser = argparse.ArgumentParser(description="FairShare: Kosten unter Personen aufteilen.")
+    parser.add_argument(
+        "file",
+        nargs="?",
+        default="costs.yaml",
+        help="Pfad zur YAML-Datei mit den Ausgaben (Standard: costs.yaml)",
+    )
+    args = parser.parse_args()
+
     try:
-        with open("costs.yaml", "r", encoding="utf-8") as file:
+        with open(args.file, "r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
 
         participants = data.get("participants", [])
@@ -26,7 +36,7 @@ def main():
             ledger.add_expense(expense)
 
         if not participants and not ledger.expenses:
-            print("Fehler: Keine Teilnehmer oder Ausgaben in 'costs.yaml' gefunden.")
+            print(f"Fehler: Keine Teilnehmer oder Ausgaben in '{args.file}' gefunden.")
             return
 
         print(f"Teilnehmer: {', '.join(participants)}")
@@ -48,7 +58,7 @@ def main():
                 print(f"  {s['from']} zahlt {s['amount']:.2f}€ an {s['to']}")
 
     except FileNotFoundError:
-        print("Fehler: Die Datei 'costs.yaml' wurde nicht gefunden.")
+        print(f"Fehler: Die Datei '{args.file}' wurde nicht gefunden.")
     except yaml.YAMLError as exc:
         print(f"Fehler beim Lesen der YAML-Datei: {exc}")
     except Exception as e:

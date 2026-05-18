@@ -23,7 +23,11 @@ pip install -r requirements.txt
 Bearbeiten Sie die `costs.yaml` nach Ihren Bedürfnissen und führen Sie das Programm aus:
 
 ```bash
+# Nutzt standardmäßig 'costs.yaml'
 python3 run.py
+
+# Oder geben Sie einen spezifischen Pfad an
+python3 run.py meine_kosten.yaml
 ```
 
 ## Tests
