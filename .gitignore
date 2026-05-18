@@ -23,3 +23,5 @@ costs.yaml
 .cache/
 .mypy_cache/
 .ruff_cache/
+build
+dist
