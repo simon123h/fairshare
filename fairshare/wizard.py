@@ -19,7 +19,7 @@ class InteractiveWizard:
         [
             ("qmark", "fg:#673ab7 bold"),  # The prefix character (our '>')
             ("question", "bold"),  # The actual question
-            ("answer", "fg:#f44336 bold"),  # The given answer
+            ("answer", "fg:#00bcd4 bold"),  # The given answer (Cyan)
             ("pointer", "fg:#673ab7 bold"),  # The selection pointer
             ("highlighted", "fg:#673ab7 bold"),  # Highlighted text
             ("selected", "fg:#ccff00"),  # Selected option
@@ -54,6 +54,7 @@ class InteractiveWizard:
         # 2. Ask for expenses
         print(f"\n{_('wizard.expenses.header')}")
         while True:
+            print()
             # Payer selection via list
             payer_options = [_("wizard.finish")] + participants
             payer = questionary.select(
