@@ -1,6 +1,6 @@
 import yaml
 from fairshare.expense import Expense
-from fairshare.settlement_logic import calculate_settlements
+from fairshare.ledger import Ledger
 
 def main():
     try:
@@ -10,29 +10,33 @@ def main():
         participants = data.get('participants', [])
         expenses_data = data.get('expenses', [])
         
-        # Umwandlung der YAML-Daten in Expense-Objekte
-        expenses = [
-            Expense(
-                payer=e['payer'],
-                amount=e['amount'],
-                description=e.get('description', 'Ausgabe'),
-                split_among=e.get('split_among')
-            ) for e in expenses_data
-        ]
+        # Initialisierung des Ledgers (Domain Aggregate)
+        ledger = Ledger(participants)
         
-        if not participants and not expenses:
+        # Hinzufügen der Ausgaben
+        for e_data in expenses_data:
+            expense = Expense(
+                payer=e_data['payer'],
+                amount=e_data['amount'],
+                description=e_data.get('description', 'Ausgabe'),
+                split_among=e_data.get('split_among')
+            )
+            ledger.add_expense(expense)
+        
+        if not participants and not ledger.expenses:
             print("Fehler: Keine Teilnehmer oder Ausgaben in 'costs.yaml' gefunden.")
             return
 
         print(f"Teilnehmer: {', '.join(participants)}")
         print("Ausgaben:")
-        for e in expenses:
-            print(f"  {e}") # Nutzt die __str__ Methode der Klasse
+        for e in ledger.expenses:
+            print(f"  {e}")
         
-        total = sum(e.amount for e in expenses)
+        total = sum(e.amount for e in ledger.expenses)
         print(f"\nGesamtausgaben: {total:.2f}€")
         
-        settlements = calculate_settlements(expenses, participants)
+        # Berechnung über das Ledger-Objekt
+        settlements = ledger.get_settlements()
         
         if not settlements:
             print("\nAlles ausgeglichen!")
