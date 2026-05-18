@@ -13,12 +13,11 @@ core:
   pays_to: "{from_p} verse {amount:.2f}€ à {to_p}"
   report_created: "Rapport Markdown créé: {path}"
 
-  tui:
+tui:
   select_project: "Sélectionnez un projet ou créez-en un nouveau :"
   enter_name: "Entrez le nom du nouveau projet :"
 
-  error:
-
+error:
   not_found: "Erreur : Le fichier '{path}' est introuvable."
   empty: "Erreur : Le fichier '{path}' est vide."
   yaml: "Erreur lors de la lecture du fichier YAML : {exc}"
