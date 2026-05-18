@@ -22,21 +22,41 @@ pip install -r requirements.txt
 
 ## Nutzung
 
-Bearbeiten Sie die `costs.yaml` (oder nutzen Sie die Vorlage) und führen Sie das Programm aus:
+Das Programm kann entweder mit einer bestehenden Datei oder interaktiv gestartet werden.
+
+### Bestehende Datei abrechnen
 
 ```bash
 # Nutzt standardmäßig 'costs.yaml'
 python3 run.py
 
 # Oder geben Sie einen spezifischen Pfad an
-python3 run.py meine_kosten.yaml
-
-# Interaktiver Assistent zum Erstellen einer neuen Datei
-python3 run.py --init
-python3 run.py urlaub.yaml --init
+python3 run.py mein-trip.costs.yaml
 ```
 
-Das Skript generiert automatisch einen detaillierten Markdown-Bericht (`report.md`) im aktuellen Verzeichnis.
+### Interaktiver Assistent zum Erstellen einer neuen Datei
+
+Wenn Sie eine neue Abrechnung starten möchten, hilft Ihnen der interaktive Assistent:
+
+```bash
+# Erstellt/Initialisiert die Standard-Datei 'costs.yaml'
+python3 run.py --init
+
+# Erstellt eine benannte Abrechnung (z.B. 'urlaub.costs.yaml')
+python3 run.py urlaub --init
+```
+
+**Besonderheit:** Das Tool hängt automatisch die Endung `.costs.yaml` an, falls keine Dateiendung angegeben wird. Dies stellt sicher, dass Ihre privaten Daten gemäß der [Git-Konvention](#sicherheit--privatsphäre) geschützt sind.
+
+Das Skript generiert nach jedem Lauf automatisch einen detaillierten Markdown-Bericht (`report.md`) im aktuellen Verzeichnis.
+
+## Sicherheit & Privatsphäre
+
+Um zu verhindern, dass persönliche Finanzdaten versehentlich in Git-Repositories veröffentlicht werden, nutzt FairShare folgende Sicherheitsmechanismen:
+
+1. **Git-Ignore**: Die Datei `.gitignore` ist so vorkonfiguriert, dass die Standarddatei `costs.yaml` sowie alle Dateien mit der Endung `*.costs.yaml` ignoriert werden.
+2. **Namenskonvention**: Nutzen Sie für Ihre Abrechnungen immer die Endung `.costs.yaml` (oder lassen Sie das Tool diese beim `--init` automatisch hinzufügen), damit Ihre Daten lokal auf Ihrem Rechner bleiben.
+3. **Beispiele**: Nutzen Sie `costs.yaml.example` als Vorlage für neue Dateien.
 
 ### PDF-Export mit Pandoc
 
