@@ -13,6 +13,10 @@ core:
   pays_to: "{from_p} 向 {to_p} 支付 {amount:.2f}€"
   report_created: "Markdown 报告已创建：{path}"
 
+tui:
+  select_project: "选择一个项目或创建一个新项目："
+  enter_name: "输入新项目的名称："
+
 error:
   not_found: "错误：找不到文件 '{path}'。"
   empty: "错误：文件 '{path}' 为空。"

@@ -1,6 +1,7 @@
-import argparse
+import os
 from typing import Any, Dict, List
 
+import questionary
 import yaml
 
 from fairshare.expense import Expense
@@ -10,35 +11,44 @@ from fairshare.report_generator import ReportGenerator
 from fairshare.wizard import InteractiveWizard
 
 
+def get_available_projects() -> List[str]:
+    """Scans the current directory for *.costs.yaml files."""
+    projects = []
+    for file in os.listdir("."):
+        if file.endswith(".costs.yaml"):
+            projects.append(file)
+    return sorted(projects)
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="FairShare: Split costs among people.")
-    parser.add_argument(
-        "project",
-        help="Name of the project/trip or path to the YAML file.",
-    )
-    parser.add_argument(
-        "--report", default="report.md", help="Path for the Markdown report (default: report.md)"
-    )
-    parser.add_argument(
-        "--init",
-        action="store_true",
-        help="Starts the interactive wizard to create a new project file.",
-    )
-    args = parser.parse_args()
+    projects = get_available_projects()
 
-    # Automatically add suffix if it's missing and it's not a .yaml/.yml file
-    input_file = args.project
-    if (
-        not input_file.endswith(".costs.yaml")
-        and not input_file.endswith(".yaml")
-        and not input_file.endswith(".yml")
-    ):
-        input_file += ".costs.yaml"
+    # TUI Choice: Select existing or create new
+    create_new_label = f"[{_('wizard.title')}]"
+    choices = [create_new_label] + projects
 
-    # Interactive mode
-    if args.init:
+    choice = questionary.select(
+        _("tui.select_project"),
+        choices=choices,
+        style=InteractiveWizard.custom_style,
+    ).ask()
+
+    if choice is None:
+        return
+
+    if choice == create_new_label:
+        project_name = questionary.text(
+            _("tui.enter_name"),
+            style=InteractiveWizard.custom_style,
+        ).ask()
+        if not project_name:
+            return
+        input_file = project_name
+        if not input_file.endswith(".costs.yaml"):
+            input_file += ".costs.yaml"
         InteractiveWizard.run(input_file)
-        # We continue to process the file and generate the report directly
+    else:
+        input_file = choice
 
     try:
         with open(input_file, "r", encoding="utf-8") as file:
@@ -101,8 +111,8 @@ def main() -> None:
                 print(f"  {_('core.pays_to', from_p=s['from'], amount=s['amount'], to_p=s['to'])}")
 
         # Report generation
-        ReportGenerator.generate_markdown(ledger, settlements, args.report)
-        print(f"\n{_('core.report_created', path=args.report)}")
+        ReportGenerator.generate_markdown(ledger, settlements, "report.md")
+        print(f"\n{_('core.report_created', path='report.md')}")
 
     except FileNotFoundError:
         print(_("error.not_found", path=input_file))

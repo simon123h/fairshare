@@ -12,23 +12,14 @@ pip install -r requirements.txt
 
 ## Usage
 
-The program must be started with a project name or a path to a file. It can also be used interactively to create a new project.
-
-### Processing an Existing Project
+FairShare features a full Terminal UI. Simply start the program, and it will guide you through selecting an existing project or creating a new one.
 
 ```bash
-# Specify the project name
-python3 run.py my-trip
+python3 run.py
 ```
 
-### Interactive Wizard for Creating a New Project
-
-If you want to start a new settlement, use the interactive wizard:
-
-```bash
-# Creates/Initializes a project
-python3 run.py vacation --init
-```
+- **Select a project:** Choose from existing `*.costs.yaml` files in the current directory.
+- **Create a new project:** Select the `[FairShare Initialization Wizard]` option and enter a name for your new project.
 
 **Note:** The tool automatically appends the `.costs.yaml` extension to the data file. This ensures all data files are ignored from the git repository.
 

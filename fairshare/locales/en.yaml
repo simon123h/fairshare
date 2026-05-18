@@ -13,6 +13,10 @@ core:
   pays_to: "{from_p} pays {amount:.2f}€ to {to_p}"
   report_created: "Markdown report created: {path}"
 
+tui:
+  select_project: "Select a project or create a new one:"
+  enter_name: "Enter the name for the new project:"
+
 error:
   not_found: "Error: File '{path}' not found."
   empty: "Error: File '{path}' is empty."

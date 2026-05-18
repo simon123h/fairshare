@@ -11,9 +11,14 @@ core:
   settlements_header: "Vorgeschlagene Zahlungen zum Ausgleich"
   settled_msg: "Alles bereits ausgeglichen!"
   pays_to: "{from_p} zahlt {amount:.2f}€ an {to_p}"
-  report_created: "Markdown-Bericht wurde erstellt: {path}"
+  report_created: "Markdown-Bericht erstellt: {path}"
 
-error:
+  tui:
+  select_project: "Wählen Sie ein Projekt aus oder erstellen Sie ein neues:"
+  enter_name: "Geben Sie den Namen für das neue Projekt ein:"
+
+  error:
+
   not_found: "Fehler: Die Datei '{path}' wurde nicht gefunden."
   empty: "Fehler: Die Datei '{path}' ist leer."
   yaml: "Fehler beim Lesen der YAML-Datei: {exc}"

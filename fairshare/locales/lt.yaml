@@ -13,6 +13,10 @@ core:
   pays_to: "{from_p} moka {amount:.2f}€ asmeniui {to_p}"
   report_created: "Markdown ataskaita sukurta: {path}"
 
+tui:
+  select_project: "Pasirinkite projektą arba sukurkite naują:"
+  enter_name: "Įveskite naujo projekto pavadinimą:"
+
 error:
   not_found: "Klaida: failas '{path}' nerastas."
   empty: "Klaida: failas '{path}' yra tuščias."

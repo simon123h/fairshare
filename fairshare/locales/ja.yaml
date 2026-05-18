@@ -13,6 +13,10 @@ core:
   pays_to: "{from_p} が {to_p} に {amount:.2f}€ 支払います"
   report_created: "Markdownレポートが作成されました: {path}"
 
+tui:
+  select_project: "プロジェクトを選択するか、新しく作成してください:"
+  enter_name: "新しいプロジェクトの名前を入力してください:"
+
 error:
   not_found: "エラー: ファイル '{path}' が見つかりません。"
   empty: "エラー: ファイル '{path}' が空です。"

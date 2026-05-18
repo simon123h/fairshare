@@ -29,15 +29,15 @@ class InteractiveWizard:
 
     @staticmethod
     def run(output_path: str) -> None:
-        print(f"\n{_('wizard_title')}\n")
+        print(f"\n{_('wizard.title')}\n")
 
         # 1. Teilnehmer abfragen
         while True:
             p_input = questionary.text(
-                _("wizard_participants_q"),
+                _("wizard.participants.q"),
                 qmark=">",
                 style=InteractiveWizard.custom_style,
-                instruction=_("wizard_participants_inst"),
+                instruction=_("wizard.participants.inst"),
             ).ask()
 
             if p_input is None:
@@ -46,30 +46,30 @@ class InteractiveWizard:
             participants = [p.strip() for p in p_input.split(",") if p.strip()]
             if participants:
                 break
-            print(_("wizard_min_participants"))
+            print(_("wizard.participants.error_min"))
 
         expenses: List[Dict[str, Any]] = []
 
         # 2. Ausgaben abfragen
-        print(f"\n{_('wizard_expenses_header')}")
+        print(f"\n{_('wizard.expenses.header')}")
         while True:
             # Auswahl des Zahlers per Liste
-            payer_options = [_("wizard_finish")] + participants
+            payer_options = [_("wizard.finish")] + participants
             payer = questionary.select(
-                _("wizard_payer_q"),
+                _("wizard.expenses.payer_q"),
                 choices=payer_options,
                 qmark=">",
                 style=InteractiveWizard.custom_style,
-                instruction=_("wizard_payer_inst"),
+                instruction=_("wizard.expenses.payer_inst"),
             ).ask()
 
-            if payer is None or payer == _("wizard_finish"):
+            if payer is None or payer == _("wizard.finish"):
                 break
 
             # Betrag abfragen
             while True:
                 amount_str = questionary.text(
-                    _("wizard_amount_q"),
+                    _("wizard.expenses.amount_q"),
                     qmark=">",
                     style=InteractiveWizard.custom_style,
                 ).ask()
@@ -79,15 +79,15 @@ class InteractiveWizard:
                 try:
                     amount = float(amount_str.replace(",", "."))
                     if amount < 0:
-                        print(_("wizard_neg_amount_error"))
+                        print(_("wizard.expenses.neg_amount_error"))
                         continue
                     break
                 except ValueError:
-                    print(_("wizard_amount_error"))
+                    print(_("wizard.expenses.amount_error"))
 
             description = questionary.text(
-                _("wizard_desc_q"),
-                default=_("wizard_desc_default"),
+                _("wizard.expenses.desc_q"),
+                default=_("wizard.expenses.desc_default"),
                 qmark=">",
                 style=InteractiveWizard.custom_style,
             ).ask()
@@ -96,34 +96,34 @@ class InteractiveWizard:
 
             # Aufteilung festlegen
             split_type = questionary.select(
-                _("wizard_split_q"),
+                _("wizard.split.q"),
                 choices=[
-                    _("wizard_split_all"),
-                    _("wizard_split_custom"),
+                    _("wizard.split.all"),
+                    _("wizard.split.custom"),
                 ],
                 qmark=">",
                 style=InteractiveWizard.custom_style,
-                instruction=_("wizard_split_inst"),
+                instruction=_("wizard.split.inst"),
             ).ask()
 
             if split_type is None:
                 sys.exit(0)
 
             split_among: Optional[List[str]] = None
-            if split_type == _("wizard_split_custom"):
+            if split_type == _("wizard.split.custom"):
                 split_among = questionary.checkbox(
-                    _("wizard_checkbox_q"),
+                    _("wizard.checkbox.q"),
                     choices=participants,
                     qmark=">",
                     style=InteractiveWizard.custom_style,
-                    instruction=_("wizard_checkbox_inst"),
+                    instruction=_("wizard.checkbox.inst"),
                 ).ask()
 
                 if split_among is None:
                     sys.exit(0)
 
                 if not split_among:
-                    print(_("wizard_min_beneficiary"))
+                    print(_("wizard.checkbox.error_min"))
                     split_among = None
 
             expense_dict: Dict[str, Any] = {
@@ -142,6 +142,6 @@ class InteractiveWizard:
         try:
             with open(output_path, "w", encoding="utf-8") as f:
                 yaml.dump(data, f, sort_keys=False, allow_unicode=True)
-            print(f"\n{_('wizard_success', path=output_path)}")
+            print(f"\n{_('wizard.success', path=output_path)}")
         except Exception as e:
-            print(_("error_unexpected", exc=e))
+            print(_("error.unexpected", exc=e))
