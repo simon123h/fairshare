@@ -14,40 +14,44 @@ from fairshare.wizard import InteractiveWizard
 DATA_DIR = Path("fairshare-data")
 
 
-def get_available_projects() -> List[str]:
-    """Scans the data directory for *.costs.yaml files."""
+def get_available_projects() -> Dict[str, str]:
+    """Scans the data directory for *.costs.yaml files and returns mapping {pretty_name: filename}."""
     if not DATA_DIR.exists():
-        return []
+        return {}
 
-    projects = []
+    projects = {}
     for file in os.listdir(DATA_DIR):
         if file.endswith(".costs.yaml"):
-            projects.append(file)
-    return sorted(projects)
+            pretty_name = file.replace(".costs.yaml", "")
+            projects[pretty_name] = file
+    return projects
 
 
 def main() -> None:
     # Ensure data directory exists
     DATA_DIR.mkdir(exist_ok=True)
 
-    projects = get_available_projects()
+    projects_map = get_available_projects()
+    pretty_names = sorted(projects_map.keys())
 
     # TUI Choice: Select existing or create new
-    create_new_label = f"[{_('wizard.title')}]"
-    choices = [create_new_label] + projects
+    new_project_label = f"[{_('tui.new_project')}]"
+    choices = [new_project_label] + pretty_names
 
     choice = questionary.select(
         _("tui.select_project"),
         choices=choices,
+        qmark=">",
         style=InteractiveWizard.custom_style,
     ).ask()
 
     if choice is None:
         return
 
-    if choice == create_new_label:
+    if choice == new_project_label:
         project_name = questionary.text(
             _("tui.enter_name"),
+            qmark=">",
             style=InteractiveWizard.custom_style,
         ).ask()
         if not project_name:
@@ -58,7 +62,7 @@ def main() -> None:
         input_file = DATA_DIR / filename
         InteractiveWizard.run(str(input_file))
     else:
-        input_file = DATA_DIR / choice
+        input_file = DATA_DIR / projects_map[choice]
 
     try:
         with open(input_file, "r", encoding="utf-8") as file:

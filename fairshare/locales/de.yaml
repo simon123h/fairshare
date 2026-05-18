@@ -16,6 +16,7 @@ core:
 tui:
   select_project: "Wählen Sie ein Projekt aus oder erstellen Sie ein neues:"
   enter_name: "Geben Sie den Namen für das neue Projekt ein:"
+  new_project: "Neues Projekt erstellen"
 
 error:
   not_found: "Fehler: Die Datei '{path}' wurde nicht gefunden."
@@ -29,7 +30,6 @@ wizard:
   success: "Erfolg: Die Datei '{path}' wurde erstellt!"
   participants:
     q: "Wer nimmt an der Abrechnung teil? (Namen mit Komma getrennt):"
-    inst: "(z.B. Alice, Bob, Charlie)"
     error_min: "Fehler: Mindestens ein Teilnehmer muss angegeben werden."
   expenses:
     header: "--- Ausgaben erfassen ---"

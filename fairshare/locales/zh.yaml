@@ -16,6 +16,7 @@ core:
 tui:
   select_project: "选择一个项目或创建一个新项目："
   enter_name: "输入新项目的名称："
+  new_project: "创建一个新项目"
 
 error:
   not_found: "错误：找不到文件 '{path}'。"
@@ -29,7 +30,6 @@ wizard:
   success: "成功：文件 '{path}' 已创建！"
   participants:
     q: "谁参与？ (姓名以逗号分隔):"
-    inst: "(例如：Alice, Bob, Charlie)"
     error_min: "错误：必须指定至少一名参与者。"
   expenses:
     header: "--- 记录费用 ---"

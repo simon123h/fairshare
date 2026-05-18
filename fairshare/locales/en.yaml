@@ -16,6 +16,7 @@ core:
 tui:
   select_project: "Select a project or create a new one:"
   enter_name: "Enter the name for the new project:"
+  new_project: "Create a new project"
 
 error:
   not_found: "Error: File '{path}' not found."
@@ -29,7 +30,6 @@ wizard:
   success: "Success: File '{path}' created!"
   participants:
     q: "Who is participating? (names separated by commas):"
-    inst: "(e.g., Alice, Bob, Charlie)"
     error_min: "Error: At least one participant must be specified."
   expenses:
     header: "--- Record Expenses ---"

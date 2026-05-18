@@ -16,6 +16,7 @@ core:
 tui:
   select_project: "プロジェクトを選択するか、新しく作成してください:"
   enter_name: "新しいプロジェクトの名前を入力してください:"
+  new_project: "新しいプロジェクトを作成"
 
 error:
   not_found: "エラー: ファイル '{path}' が見つかりません。"
@@ -29,7 +30,6 @@ wizard:
   success: "成功: ファイル '{path}' が作成されました！"
   participants:
     q: "参加者は誰ですか？ (名前をカンマで区切ってください):"
-    inst: "(例: Alice, Bob, Charlie)"
     error_min: "エラー: 少なくとも1人の参加者を指定する必要があります。"
   expenses:
     header: "--- 経費の記録 ---"

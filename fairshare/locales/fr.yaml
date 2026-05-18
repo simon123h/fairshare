@@ -16,6 +16,7 @@ core:
 tui:
   select_project: "Sélectionnez un projet ou créez-en un nouveau :"
   enter_name: "Entrez le nom du nouveau projet :"
+  new_project: "Créer un nouveau projet"
 
 error:
   not_found: "Erreur : Le fichier '{path}' est introuvable."
@@ -29,7 +30,6 @@ wizard:
   success: "Succès : Le fichier '{path}' a été créé !"
   participants:
     q: "Qui participe au règlement ? (noms séparés par des virgules) :"
-    inst: "(ex. Alice, Bob, Charlie)"
     error_min: "Erreur : Au moins un participant doit être spécifié."
   expenses:
     header: "--- Enregistrer les dépenses ---"

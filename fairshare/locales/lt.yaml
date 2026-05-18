@@ -16,6 +16,7 @@ core:
 tui:
   select_project: "Pasirinkite projektą arba sukurkite naują:"
   enter_name: "Įveskite naujo projekto pavadinimą:"
+  new_project: "Sukurti naują projektą"
 
 error:
   not_found: "Klaida: failas '{path}' nerastas."
@@ -29,7 +30,6 @@ wizard:
   success: "Sėkmė: failas '{path}' sukurtas!"
   participants:
     q: "Kas dalyvauja? (vardai atskirti kableliais):"
-    inst: "(pvz., Alisa, Bobas, Čarlis)"
     error_min: "Klaida: turi būti nurodytas bent vienas dalyvis."
   expenses:
     header: "--- Įrašyti išlaidas ---"

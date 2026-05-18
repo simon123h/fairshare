@@ -37,7 +37,6 @@ class InteractiveWizard:
                 _("wizard.participants.q"),
                 qmark=">",
                 style=InteractiveWizard.custom_style,
-                instruction=_("wizard.participants.inst"),
             ).ask()
 
             if p_input is None:
