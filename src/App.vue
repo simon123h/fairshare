@@ -17,11 +17,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppHeader from './components/AppHeader.vue';
 import ProjectSidebar from './components/ProjectSidebar.vue';
 
+const { locale } = useI18n();
 const isSidebarOpen = ref(false);
+
+// Synchronize the HTML lang attribute with the current locale for CSS :lang() selectors and accessibility
+watchEffect(() => {
+  document.documentElement.setAttribute('lang', locale.value);
+});
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value;

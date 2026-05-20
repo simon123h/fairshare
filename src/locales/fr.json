@@ -1,7 +1,7 @@
 {
   "core": {
-    "participants": "Participants",
-    "expenses": "Dépenses",
+    "participants": "participants",
+    "expenses": "dépenses",
     "details_header": "Détails des dépenses",
     "summary_header": "RÉSUMÉ GÉNÉRAL",
     "total_spent": "Total dépensé",

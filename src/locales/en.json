@@ -1,7 +1,7 @@
 {
   "core": {
-    "participants": "Participants",
-    "expenses": "Expenses",
+    "participants": "participants",
+    "expenses": "expenses",
     "details_header": "Expense Details",
     "summary_header": "TOTAL SUMMARY",
     "total_spent": "Total spent",

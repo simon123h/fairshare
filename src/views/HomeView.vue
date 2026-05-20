@@ -31,13 +31,13 @@
             <div class="stat-item">
               <span class="stat-icon mdi mdi-account-group"></span>
               <span class="stat-text">
-                {{ project.participants.length }} {{ t('core.participants').toLowerCase() }}
+                {{ project.participants.length }} {{ t('core.participants') }}
               </span>
             </div>
             <div class="stat-item">
               <span class="stat-icon mdi mdi-cash-multiple"></span>
               <span class="stat-text">
-                {{ project.expenses.length }} {{ t('core.expenses').toLowerCase() }}
+                {{ project.expenses.length }} {{ t('core.expenses') }}
               </span>
             </div>
           </div>
