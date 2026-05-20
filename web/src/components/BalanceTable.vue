@@ -1,7 +1,7 @@
 <template>
   <div class="balance-table card">
     <h2 class="section-title">
-      <span>📊</span> {{ t('web.overview') }}
+      <span class="mdi mdi-chart-bar"></span> {{ t('web.overview') }}
     </h2>
 
     <div v-if="expenses.length === 0" class="empty-state">
@@ -21,7 +21,7 @@
         <tbody>
           <tr v-for="row in tableData" :key="row.name">
             <td class="name-cell">
-              <span class="avatar">👤</span>
+              <span class="avatar mdi mdi-account"></span>
               <span class="name">{{ row.name }}</span>
             </td>
             <td>{{ formatAmount(row.paid) }}</td>

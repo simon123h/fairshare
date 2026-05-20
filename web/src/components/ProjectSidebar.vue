@@ -15,7 +15,7 @@
           class="btn btn-primary w-full add-project-btn"
           @click="showNewForm = true"
         >
-          <span>＋</span> {{ t('web.newProject') }}
+          <span class="mdi mdi-plus"></span> {{ t('web.newProject') }}
         </button>
 
         <!-- New Project Form -->
@@ -64,7 +64,7 @@
       <!-- Projects List -->
       <div class="projects-list-container">
         <div v-if="projects.length === 0" class="empty-state">
-          <span class="emoji">📁</span>
+           <span class="emoji mdi mdi-folder-outline" style="font-size: 2.5rem; display: block; margin-bottom: 8px;"></span>
           <p>{{ t('web.noProjects') }}</p>
         </div>
 
@@ -80,7 +80,7 @@
               <span class="project-name">{{ project.name }}</span>
               <div class="project-meta">
                 <span class="badge participants-badge">
-                  👥 {{ project.participants.length }}
+                   <span class="mdi mdi-account-group"></span> {{ project.participants.length }}
                 </span>
                 <span class="badge currency-badge">
                   {{ project.currency }}
@@ -93,7 +93,7 @@
               @click.stop="handleDelete(project)"
               :title="t('web.deleteProject')"
             >
-              🗑️
+               <span class="mdi mdi-delete-outline"></span>
             </button>
           </li>
         </ul>

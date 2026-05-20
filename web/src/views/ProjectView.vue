@@ -13,7 +13,7 @@
             :title="t('web.currency')"
           >
             <span>{{ project.currency }}</span>
-            <span class="edit-icon">✏️</span>
+            <span class="edit-icon mdi mdi-pencil-outline"></span>
           </button>
 
           <!-- Inline Currency Switcher -->
@@ -30,7 +30,7 @@
       </div>
 
       <router-link to="/" class="btn btn-secondary btn-sm back-link">
-        ← {{ t('web.cancel') }}
+        <span class="mdi mdi-arrow-left"></span> {{ t('web.cancel') }}
       </router-link>
     </header>
 
@@ -48,13 +48,13 @@
         <!-- Expense Recorder -->
         <div class="expenses-section card">
           <div class="section-header">
-            <h2 class="section-title">💸 {{ t('core.expenses') }}</h2>
+            <h2 class="section-title"><span class="mdi mdi-cash-multiple"></span> {{ t('core.expenses') }}</h2>
             <button
               class="btn btn-primary btn-sm"
               @click="openExpenseForm(null)"
               :disabled="project.participants.length === 0"
             >
-              ＋ {{ t('web.addExpense') }}
+              <span class="mdi mdi-plus"></span> {{ t('web.addExpense') }}
             </button>
           </div>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="settlements-section card">
     <h2 class="section-title">
-      <span>🤝</span> {{ t('web.settlements') }}
+      <span class="mdi mdi-handshake-outline"></span> {{ t('web.settlements') }}
     </h2>
 
     <div v-if="expenses.length === 0" class="empty-state">
@@ -9,7 +9,7 @@
     </div>
 
     <div v-else-if="settlements.length === 0" class="settled-state bounce-in">
-      <span class="checkmark">✅</span>
+      <span class="checkmark mdi mdi-check-circle-outline" style="font-size: 2.5rem; color: var(--color-success); display: block; margin-bottom: 8px;"></span>
       <p class="settled-text">{{ t('web.allSettled') }}</p>
     </div>
 
@@ -21,7 +21,7 @@
       >
         <div class="settlement-info">
           <div class="person debtor">
-            <span class="avatar">👤</span>
+            <span class="avatar mdi mdi-account"></span>
             <span class="name">{{ settlement.from }}</span>
           </div>
 
@@ -34,7 +34,7 @@
           </div>
 
           <div class="person creditor">
-            <span class="avatar">👤</span>
+            <span class="avatar mdi mdi-account"></span>
             <span class="name">{{ settlement.to }}</span>
           </div>
         </div>

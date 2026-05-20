@@ -9,7 +9,7 @@
     <!-- Content Area -->
     <main class="content-container">
       <div v-if="projects.length === 0" class="empty-dashboard card text-center scale-in">
-        <div class="empty-illustration">💰</div>
+        <div class="empty-illustration mdi mdi-piggy-bank-outline" style="font-size: 3.5rem; color: var(--color-primary-300); margin-bottom: var(--space-4);"></div>
         <h2>{{ t('web.noProjects') }}</h2>
         <p>{{ t('web.getStarted') }}</p>
       </div>
@@ -29,13 +29,13 @@
 
           <div class="card-stats">
             <div class="stat-item">
-              <span class="stat-icon">👥</span>
+              <span class="stat-icon mdi mdi-account-group"></span>
               <span class="stat-text">
                 {{ project.participants.length }} {{ t('core.participants').toLowerCase() }}
               </span>
             </div>
             <div class="stat-item">
-              <span class="stat-icon">💸</span>
+              <span class="stat-icon mdi mdi-cash-multiple"></span>
               <span class="stat-text">
                 {{ project.expenses.length }} {{ t('core.expenses').toLowerCase() }}
               </span>
@@ -44,7 +44,7 @@
 
           <footer class="card-footer">
             <span class="updated-at">
-              🕒 {{ formatRelativeTime(project.updatedAt) }}
+              <span class="mdi mdi-clock-outline"></span> {{ formatRelativeTime(project.updatedAt) }}
             </span>
           </footer>
         </div>

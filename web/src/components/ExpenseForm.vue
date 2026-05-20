@@ -5,7 +5,9 @@
         <h2 class="modal-title">
           {{ expense ? t('web.editExpense') : t('web.addExpense') }}
         </h2>
-        <button class="btn btn-ghost btn-icon close-btn" @click="cancel">✕</button>
+        <button class="btn btn-ghost btn-icon close-btn" @click="cancel">
+          <span class="mdi mdi-close"></span>
+        </button>
       </header>
 
       <form @submit.prevent="submit" class="modal-body">

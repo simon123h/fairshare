@@ -1,11 +1,11 @@
 <template>
   <div class="expense-list card">
     <h2 class="section-title">
-      <span>💸</span> {{ t('core.expenses') }}
+      <span class="mdi mdi-cash-multiple"></span> {{ t('core.expenses') }}
     </h2>
 
     <div v-if="sortedExpenses.length === 0" class="empty-state">
-      <span class="emoji">💰</span>
+      <span class="emoji mdi mdi-piggy-bank-outline" style="font-size: 2.5rem; display: block; margin-bottom: 8px;"></span>
       <p>{{ t('web.noExpenses') }}</p>
     </div>
 
@@ -24,7 +24,7 @@
         <TransitionGroup name="list" tag="tbody">
           <tr v-for="expense in sortedExpenses" :key="expense.id" class="expense-row">
             <td class="payer-cell">
-              <span class="user-avatar">👤</span>
+              <span class="user-avatar mdi mdi-account"></span>
               <span class="name">{{ expense.payer }}</span>
             </td>
             <td class="amount-cell">{{ formatAmount(expense.amount) }}</td>
@@ -43,14 +43,14 @@
                 @click="emit('edit', expense)"
                 :title="t('web.editExpense')"
               >
-                ✏️
+                <span class="mdi mdi-pencil-outline"></span>
               </button>
               <button
                 class="btn btn-ghost btn-icon delete-btn"
                 @click="confirmDelete(expense)"
                 :title="t('web.delete')"
               >
-                🗑️
+                <span class="mdi mdi-delete-outline"></span>
               </button>
             </td>
           </tr>
@@ -63,7 +63,7 @@
           <div v-for="expense in sortedExpenses" :key="expense.id" class="mobile-card card">
             <div class="card-header">
               <div class="payer-info">
-                <span class="avatar">👤</span>
+                <span class="avatar mdi mdi-account"></span>
                 <span class="name">{{ expense.payer }}</span>
               </div>
               <div class="amount">{{ formatAmount(expense.amount) }}</div>
@@ -84,10 +84,10 @@
 
             <div class="card-actions">
               <button class="btn btn-secondary btn-sm" @click="emit('edit', expense)">
-                ✏️ {{ t('web.save') }}
+                <span class="mdi mdi-pencil-outline"></span> {{ t('web.save') }}
               </button>
               <button class="btn btn-danger btn-sm" @click="confirmDelete(expense)">
-                🗑️ {{ t('web.delete') }}
+                <span class="mdi mdi-delete-outline"></span> {{ t('web.delete') }}
               </button>
             </div>
           </div>

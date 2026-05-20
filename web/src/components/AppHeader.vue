@@ -7,7 +7,7 @@
           @click="emit('toggle-sidebar')"
           aria-label="Toggle Sidebar"
         >
-          ☰
+          <span class="mdi mdi-menu"></span>
         </button>
         <router-link to="/" class="logo">
           <span class="logo-text">FairShare</span>
@@ -22,8 +22,8 @@
           @click="toggleTheme"
           :aria-label="t('web.theme')"
         >
-          <span v-if="theme === 'dark'" class="icon">☀️</span>
-          <span v-else class="icon">🌙</span>
+          <span v-if="theme === 'dark'" class="icon mdi mdi-weather-sunny"></span>
+          <span v-else class="icon mdi mdi-weather-night"></span>
         </button>
       </div>
     </div>

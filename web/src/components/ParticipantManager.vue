@@ -1,7 +1,7 @@
 <template>
   <div class="participant-manager card">
     <h2 class="section-title">
-      <span>👥</span> {{ t('web.participants') }}
+      <span class="mdi mdi-account-group"></span> {{ t('web.participants') }}
     </h2>
 
     <div class="input-area">
@@ -19,7 +19,7 @@
               @click="remove(person)"
               aria-label="Remove participant"
             >
-              ✕
+              <span class="mdi mdi-close"></span>
             </button>
           </div>
         </TransitionGroup>
