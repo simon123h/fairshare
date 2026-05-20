@@ -1,67 +1,44 @@
-# FairShare CLI
+# FairShare
 
-A simple Python tool to fairly split expenses among multiple people with a full Terminal UI.
+A modern web application to fairly split expenses among multiple people. Built with Vue 3 and TypeScript.
 
-## Quick Start (Executable)
+## Quick Start
 
-1. **Download** the latest executable for your platform from the releases page.
-2. **Run** the application:
+Ensure you have [Node.js](https://nodejs.org/) installed (v18 or higher recommended).
 
+1. **Clone the repository:**
    ```bash
-   # On Linux/macOS
-   ./fairshare
-
-   # On Windows
-   fairshare.exe
+   git clone https://github.com/your-repo/fairshare.git
+   cd fairshare
    ```
-
-## Alternative: Run with Python
-
-If you prefer to run from source, ensure you have Python 3.8+ installed:
-
-1. **Install dependencies:**
+2. **Install dependencies:**
    ```bash
-   pip install -r requirements.txt
+   npm install
    ```
-2. **Start the program:**
+3. **Start the development server:**
    ```bash
-   python3 run.py
+   npm run dev
    ```
+4. **Open in browser:**
+   Navigate to `http://localhost:5173` (or the port shown in your terminal).
 
-## Usage
+## Features
 
-FairShare features a full Terminal UI that guides you through the process:
+- **Interactive Expense Management:** Add, edit, and remove expenses with ease.
+- **Real-time Balance Calculation:** Instantly see who owes whom.
+- **Settlement Logic:** Optimized suggestions for the fewest number of transactions.
+- **Language Support:** Automatically detects your browser language or manually switch between:
+  - English
+  - German (Deutsch)
+  - French (Français)
+  - Lithuanian (Lietuvių)
+  - Japanese (日本語)
+  - Chinese (中文)
+- **Responsive Design:** Works on both desktop and mobile browsers.
 
-- **Select a project:** Choose from existing `*.costs.yaml` files in the `fairshare-data/` directory.
-- **Create a new project:** Select the `[FairShare Initialization Wizard]` option and enter a name.
+## Project Structure
 
-**Note:** The tool automatically appends the `.costs.yaml` extension to project names. All project data is stored in the `fairshare-data/` folder.
-
-After each run, the script automatically generates a detailed Markdown report (`report.md`) in the current directory.
-
-## Language Support
-
-FairShare automatically detects your system language and adjusts the CLI, interactive wizard, and generated reports accordingly. Currently supported languages:
-
-- **English** (Default)
-- **German** (Deutsch)
-- **French** (Français)
-- **Lithuanian** (Lietuvių)
-- **Japanese** (日本語)
-- **Chinese** (中文)
-
-## PDF Export
-
-You can convert the generated Markdown report to PDF using **Pandoc**:
-
-```bash
-pandoc report.md -V geometry:margin=2cm -o settlement.pdf
-```
-
----
-
-For development, project structure, or building the executable, please see:
+For technical details and contribution guidelines, please see:
 
 - [ARCHITECTURE.md](ARCHITECTURE.md)
 - [CONTRIBUTING.md](CONTRIBUTING.md)
-- [BUILD.md](docs/BUILD.md)

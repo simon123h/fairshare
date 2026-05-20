@@ -1,46 +1,24 @@
-# Architecture of FairShare CLI
+# Architecture of FairShare Web
 
-This document describes the high-level architecture and project structure of FairShare CLI.
+This document describes the high-level architecture and project structure of the FairShare web application.
 
-## Project Structure
+## Project Structure (under `src/`)
 
-- `fairshare/`: The core Python package.
-  - `expense.py`: Data model for individual expenses.
-  - `ledger.py`: The main logic (Aggregate) for managing participants and calculating balances.
-  - `report_generator.py`: Responsible for generating the Markdown report.
-  - `wizard.py`: Implementation of the interactive initialization wizard.
-  - `i18n.py`: Internationalization support and language detection.
-  - `locales/`: YAML files containing translations for various languages.
-- `fairshare-data/`: Directory where all user settlement files (`*.costs.yaml`) are stored.
-- `tests/`: Comprehensive unit tests covering domain logic, validations, and i18n.
-- `run.py`: The entry point script that orchestrates the CLI flow.
+- **`components/`**: Reusable Vue components (BalanceTable, ExpenseForm, etc.).
+- **`composables/`**: Shared logic using Vue's Composition API (e.g., `useI18n.ts`, `useProjects.ts`).
+- **`models/`**: TypeScript interfaces and classes defining the domain data (e.g., `Expense.ts`, `Ledger.ts`).
+- **`locales/`**: JSON files containing translations for various languages.
+- **`views/`**: Top-level page components (HomeView, ProjectView).
+- **`router/`**: Vue Router configuration.
+- **`styles/`**: Global CSS variables and base styles.
 
 ## Design Principles
 
-- **Separation of Concerns:** Domain logic is kept separate from the CLI presentation layer.
-- **i18n First:** All user-facing strings are externalized into locale files.
-- **Data Integrity:** Strict validation ensures that expenses and participant lists are always in a consistent state.
+- **Component-Based UI:** The interface is built from small, focused components for maintainability.
+- **Composition over Inheritance:** Logical concerns are extracted into composables.
+- **Strong Typing:** TypeScript is used throughout to ensure data consistency and prevent runtime errors.
+- **i18n First:** All user-facing strings are managed through `vue-i18n` with support for multiple languages.
 
-## Data Format
+## Data Flow
 
-Project data is stored in YAML files within the `fairshare-data/` directory.
-
-```yaml
-# List of all people participating by default
-participants:
-  - Alice
-  - Bob
-  - Charlie
-
-# List of individual expenses
-expenses:
-  - payer: Alice
-    amount: 50.0
-    description: "Groceries"
-
-    # Optional: Split among specific people only.
-    # If omitted, the expense is split among ALL participants.
-    split_among:
-      - Alice
-      - Bob
-```
+The application uses a reactive state management approach. Local projects and expenses are managed through composables that handle calculation logic and persistence (currently in-memory/local).
