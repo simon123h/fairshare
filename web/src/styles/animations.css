@@ -1,0 +1,245 @@
+/* ============================================
+   FairShare Animations & Transitions
+   ============================================ */
+
+/* ── Keyframes ───────────────────────────────── */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ── Vue Transition: Fade ────────────────────── */
+
+.fade-enter-active {
+  transition: opacity var(--transition-normal);
+}
+
+.fade-leave-active {
+  transition: opacity var(--transition-fast);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* ── Vue Transition: Slide ───────────────────── */
+
+.slide-enter-active {
+  transition: all var(--transition-normal);
+}
+
+.slide-leave-active {
+  transition: all var(--transition-fast);
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+/* ── Vue TransitionGroup: List ───────────────── */
+
+.list-enter-active {
+  transition: all var(--transition-normal);
+}
+
+.list-leave-active {
+  transition: all var(--transition-fast);
+  position: absolute;
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(-16px);
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.list-move {
+  transition: transform var(--transition-normal);
+}
+
+/* ── Vue Transition: Scale ───────────────────── */
+
+.scale-enter-active {
+  transition: all var(--transition-normal);
+}
+
+.scale-leave-active {
+  transition: all var(--transition-fast);
+}
+
+.scale-enter-from {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+/* ── Utility Classes ─────────────────────────── */
+
+.hover-lift {
+  transition: transform var(--transition-normal),
+              box-shadow var(--transition-normal);
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.animate-fadeIn {
+  animation: fadeIn var(--transition-normal) both;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp var(--transition-normal) both;
+}
+
+.animate-fadeInDown {
+  animation: fadeInDown var(--transition-normal) both;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft var(--transition-normal) both;
+}
+
+.animate-slideInRight {
+  animation: slideInRight var(--transition-normal) both;
+}
+
+.animate-scaleIn {
+  animation: scaleIn var(--transition-normal) both;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    var(--color-surface-hover) 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ── Stagger Animation Delays ────────────────── */
+
+.stagger-1 { animation-delay: 50ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 150ms; }
+.stagger-4 { animation-delay: 200ms; }
+.stagger-5 { animation-delay: 250ms; }
+.stagger-6 { animation-delay: 300ms; }
+
+/* ── Reduced Motion ──────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hover-lift:hover {
+    transform: none;
+  }
+}

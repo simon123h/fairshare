@@ -1,0 +1,123 @@
+{
+  "core": {
+    "participants": "参与者",
+    "expenses": "费用",
+    "details_header": "费用明细",
+    "summary_header": "总结",
+    "total_spent": "支出总计",
+    "name": "姓名",
+    "paid": "已付",
+    "share": "分摊",
+    "diff": "差额",
+    "settlements_header": "建议的结算交易",
+    "settled_msg": "全部已结清！",
+    "pays_to": "{from_p} 向 {to_p} 支付 {amount}",
+    "report_created": "Markdown 报告已创建：{path}"
+  },
+  "tui": {
+    "select_project": "选择一个项目或创建一个新项目：",
+    "enter_name": "输入新项目的名称：",
+    "new_project": "创建一个新项目",
+    "select_inst": "(↑/↓)"
+  },
+  "error": {
+    "not_found": "错误：找不到文件 '{path}'。",
+    "empty": "错误：文件 '{path}' 为空。",
+    "yaml": "读取 YAML 文件时出错：{exc}",
+    "unexpected": "发生意外错误：{exc}"
+  },
+  "wizard": {
+    "finish": "(完成并保存)",
+    "success": "成功：项目 '{path}' 已保存！",
+    "participants": {
+      "q": "谁参与？ (姓名以逗号分隔):",
+      "error_min": "错误：必须指定至少一名参与者。"
+    },
+    "expenses": {
+      "header": "--- 记录费用 ---",
+      "payer_q": "谁付的钱？",
+      "payer_inst": "(↑/↓)",
+      "amount_q": "金额 (€):",
+      "amount_error": "错误：请输入有效数字。",
+      "neg_amount_error": "错误：金额不能为负数。",
+      "desc_q": "描述 (可选):"
+    },
+    "split": {
+      "q": "金额应如何分摊？",
+      "all": "所有参与者平摊",
+      "custom": "选择特定人员",
+      "inst": "(↑/↓)"
+    },
+    "checkbox": {
+      "q": "选择分摊此项费用的人员：",
+      "inst": "(空格选择，回车确认)",
+      "error_min": "错误：必须选择至少一人。默认：所有人。"
+    }
+  },
+  "val": {
+    "neg_amount": "无效金额：{amount}。金额不能为负数。",
+    "invalid_payer": "必须提供有效的付款人姓名。",
+    "empty_beneficiaries": "费用 '{desc}' 没有受益人 (参与者列表为空)。",
+    "empty_ledger": "参与者列表不能为空。",
+    "invalid_names": "所有参与者姓名必须为有效字符串。",
+    "payer_not_in_group": "验证错误：付款人 '{payer}' 不在参与者列表 {list} 中。",
+    "beneficiary_not_in_group": "验证错误：'{desc}' 的 'split_among' 中的人员 '{person}' 不在参与者列表中。"
+  },
+  "report": {
+    "title": "FairShare 结算报告",
+    "date": "创建日期",
+    "summary": "总结",
+    "details": "费用明细",
+    "balances": "余额",
+    "settlements": "建议结算",
+    "no_settlements": "无需付款。所有账目均已平衡。",
+    "footer": "本报告由 FairShare CLI 自动生成。"
+  },
+  "table": {
+    "payer": "付款人",
+    "amount": "金额",
+    "desc": "描述",
+    "split": "分摊给",
+    "all": "所有人",
+    "from": "来自",
+    "to": "发给"
+  },
+  "web": {
+    "title": "FairShare",
+    "subtitle": "公平分摊费用",
+    "newProject": "新建项目",
+    "projectName": "项目名称",
+    "currency": "货币",
+    "customCurrency": "自定义",
+    "createProject": "创建",
+    "deleteProject": "删除项目",
+    "deleteConfirm": "确定要删除此项目吗？",
+    "noProjects": "还没有项目",
+    "getStarted": "创建您的第一个项目以开始使用",
+    "participants": "参与者",
+    "addParticipant": "添加参与者...",
+    "expenses": "费用",
+    "addExpense": "添加费用",
+    "editExpense": "编辑费用",
+    "noExpenses": "还没有费用",
+    "payer": "谁付的钱？",
+    "amount": "金额",
+    "description": "描述",
+    "descriptionPlaceholder": "例如：杂货、晚餐...",
+    "splitAll": "所有人平摊",
+    "splitCustom": "指定人员分摊",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "confirm": "确认",
+    "overview": "概览",
+    "settlements": "结算",
+    "allSettled": "全部结清！无需付款。",
+    "paysTo": "{from} 向 {to} 支付 {amount}",
+    "totalSpent": "支出总计",
+    "language": "语言",
+    "theme": "主题",
+    "lightMode": "浅色",
+    "darkMode": "深色"
+  }
+}

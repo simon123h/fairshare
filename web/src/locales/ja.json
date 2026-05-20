@@ -1,0 +1,123 @@
+{
+  "core": {
+    "participants": "参加者",
+    "expenses": "経費",
+    "details_header": "経費詳細",
+    "summary_header": "総計",
+    "total_spent": "支出合計",
+    "name": "名前",
+    "paid": "支払額",
+    "share": "負担額",
+    "diff": "差額",
+    "settlements_header": "推奨される精算",
+    "settled_msg": "すべて精算済みです！",
+    "pays_to": "{from_p} が {to_p} に {amount} 支払います",
+    "report_created": "Markdownレポートが作成されました: {path}"
+  },
+  "tui": {
+    "select_project": "プロジェクトを選択するか、新しく作成してください:",
+    "enter_name": "新しいプロジェクトの名前を入力してください:",
+    "new_project": "新しいプロジェクトを作成",
+    "select_inst": "(↑/↓)"
+  },
+  "error": {
+    "not_found": "エラー: ファイル '{path}' が見つかりません。",
+    "empty": "エラー: ファイル '{path}' が空です。",
+    "yaml": "YAMLファイルの読み込みエラー: {exc}",
+    "unexpected": "予期しないエラーが発生しました: {exc}"
+  },
+  "wizard": {
+    "finish": "(終了して保存)",
+    "success": "成功: プロジェクト '{path}' が保存されました！",
+    "participants": {
+      "q": "参加者は誰ですか？ (名前をカンマで区切ってください):",
+      "error_min": "エラー: 少なくとも1人の参加者を指定する必要があります。"
+    },
+    "expenses": {
+      "header": "--- 経費の記録 ---",
+      "payer_q": "誰が支払いましたか？",
+      "payer_inst": "(↑/↓)",
+      "amount_q": "金額 (€):",
+      "amount_error": "エラー: 有効な数字を入力してください。",
+      "neg_amount_error": "エラー: 金額を負にすることはできません。",
+      "desc_q": "説明 (任意):"
+    },
+    "split": {
+      "q": "金額をどのように分割しますか？",
+      "all": "全員で分割",
+      "custom": "特定の人を選択",
+      "inst": "(↑/↓)"
+    },
+    "checkbox": {
+      "q": "この経費を負担する人を選択してください:",
+      "inst": "(スペースで選択、Enterで確定)",
+      "error_min": "エラー: 少なくとも1人を選択する必要があります。デフォルト: 全員"
+    }
+  },
+  "val": {
+    "neg_amount": "無効な金額: {amount}。金額を負にすることはできません。",
+    "invalid_payer": "有効な支払者の名前を入力してください。",
+    "empty_beneficiaries": "経費 '{desc}' に負担者がいません (参加者リストが空です)。",
+    "empty_ledger": "参加者リストを空にすることはできません。",
+    "invalid_names": "すべての参加者名は有効な文字列である必要があります。",
+    "payer_not_in_group": "検証エラー: 支払者 '{payer}' が参加者リスト {list} に含まれていません。",
+    "beneficiary_not_in_group": "検証エラー: '{desc}' の 'split_among' に含まれる '{person}' が参加者リストに含まれていません。"
+  },
+  "report": {
+    "title": "FairShare 精算レポート",
+    "date": "作成日",
+    "summary": "概要",
+    "details": "経費詳細",
+    "balances": "収支",
+    "settlements": "推奨される精算",
+    "no_settlements": "支払いの必要はありません。すべての収支が一致しています。",
+    "footer": "このレポートは FairShare CLI によって自動生成されました。"
+  },
+  "table": {
+    "payer": "支払者",
+    "amount": "金額",
+    "desc": "説明",
+    "split": "負担者",
+    "all": "全員",
+    "from": "支払元",
+    "to": "支払先"
+  },
+  "web": {
+    "title": "FairShare",
+    "subtitle": "経費を公平に分割",
+    "newProject": "新しいプロジェクト",
+    "projectName": "プロジェクト名",
+    "currency": "通貨",
+    "customCurrency": "カスタム",
+    "createProject": "作成",
+    "deleteProject": "プロジェクトを削除",
+    "deleteConfirm": "このプロジェクトを削除してもよろしいですか？",
+    "noProjects": "プロジェクトはまだありません",
+    "getStarted": "最初のプロジェクトを作成して始めましょう",
+    "participants": "参加者",
+    "addParticipant": "参加者を追加...",
+    "expenses": "経費",
+    "addExpense": "経費を追加",
+    "editExpense": "経費を編集",
+    "noExpenses": "経費はまだありません",
+    "payer": "誰が支払いましたか？",
+    "amount": "金額",
+    "description": "説明",
+    "descriptionPlaceholder": "例：食料品、夕食...",
+    "splitAll": "全員で分割",
+    "splitCustom": "特定の人で分割",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "confirm": "確認",
+    "overview": "概要",
+    "settlements": "精算",
+    "allSettled": "すべて精算済み！支払い不要です。",
+    "paysTo": "{from} が {to} に {amount} 支払う",
+    "totalSpent": "支出合計",
+    "language": "言語",
+    "theme": "テーマ",
+    "lightMode": "ライト",
+    "darkMode": "ダーク"
+  }
+}
