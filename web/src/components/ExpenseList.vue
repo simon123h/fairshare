@@ -34,7 +34,7 @@
                 {{ t('table.all') }}
               </span>
               <span v-else class="split-badge custom" :title="expense.splitAmong.join(', ')">
-                {{ expense.splitAmong.length }} {{ t('core.participants').toLowerCase() }}
+                {{ expense.splitAmong.length }} {{ t('core.participants') }}
               </span>
             </td>
             <td class="actions-cell">

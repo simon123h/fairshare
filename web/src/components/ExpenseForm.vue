@@ -60,11 +60,11 @@
         <div class="form-group">
           <label class="form-label">{{ t('wizard.split.q') }}</label>
           <div class="radio-group">
-            <label class="radio-label">
+            <label class="radio-option" :class="{ active: splitType === 'all' }">
               <input type="radio" value="all" v-model="splitType" />
               <span>{{ t('web.splitAll') }}</span>
             </label>
-            <label class="radio-label">
+            <label class="radio-option" :class="{ active: splitType === 'custom' }">
               <input type="radio" value="custom" v-model="splitType" />
               <span>{{ t('web.splitCustom') }}</span>
             </label>
@@ -84,7 +84,8 @@
                 <input
                   type="checkbox"
                   :value="person"
-                  v-model="splitAmong"
+                  :checked="splitAmong.includes(person)"
+                  @change="togglePerson(person)"
                 />
                 <span>{{ person }}</span>
               </label>
@@ -148,6 +149,14 @@ if (props.expense) {
     splitAmong.value = [];
   }
 }
+
+const togglePerson = (person: string) => {
+  if (splitAmong.value.includes(person)) {
+    splitAmong.value = splitAmong.value.filter(p => p !== person);
+  } else {
+    splitAmong.value = [...splitAmong.value, person];
+  }
+};
 
 const isValid = computed(() => {
   const isPayerValid = payer.value !== '';
@@ -293,15 +302,39 @@ onUnmounted(() => {
 
 .radio-group {
   display: flex;
-  gap: var(--space-4);
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
 }
 
-.radio-label {
+.radio-option {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+}
+
+.radio-option:hover {
+  background-color: var(--color-bg-alt);
+  border-color: var(--color-text-muted);
+}
+
+.radio-option.active {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+.radio-option input[type="radio"] {
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
 }
 
 .custom-split-list {
@@ -329,6 +362,12 @@ onUnmounted(() => {
   gap: var(--space-2);
   cursor: pointer;
   font-size: var(--font-size-sm);
+}
+
+.checkbox-label input[type="checkbox"] {
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
 }
 
 .modal-footer {
