@@ -1,22 +1,24 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-.venv/
-venv/
-.coverage
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# FairShare: Berichte & PDFs ignorieren
-report.md
-*.pdf
-
-# FairShare: Kosten-Daten (lokal & privat)
-# All project data is stored in the fairshare-data/ directory and ignored from git.
-fairshare-data/
-
-# Allgemeine Tool-Verzeichnisse
-.cache/
-.mypy_cache/
-.ruff_cache/
-build
+node_modules
 dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
