@@ -19,7 +19,7 @@
         <div
           v-for="project in projects"
           :key="project.id"
-          class="project-card card hover-lift"
+          class="project-card card"
           @click="openProject(project.id)"
         >
           <div class="card-header">

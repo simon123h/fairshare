@@ -10,7 +10,7 @@
           <div
             v-for="person in participants"
             :key="person"
-            class="chip chip-interactive hover-lift"
+            class="chip chip-interactive"
           >
             <span>{{ person }}</span>
             <button

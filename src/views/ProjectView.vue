@@ -8,7 +8,7 @@
         <!-- Interactive Currency Badge -->
         <div class="currency-badge-container" ref="currencyDropdownRef">
           <button
-            class="currency-badge hover-lift"
+            class="currency-badge"
             @click="toggleCurrencyDropdown"
             :title="t('web.currency')"
           >

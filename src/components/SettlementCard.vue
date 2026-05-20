@@ -17,7 +17,7 @@
       <div
         v-for="(settlement, index) in settlements"
         :key="index"
-        class="settlement-card hover-lift"
+        class="settlement-card"
       >
         <div class="settlement-info">
           <div class="person debtor">
