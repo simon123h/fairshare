@@ -169,15 +169,7 @@
 
 /* ── Utility Classes ─────────────────────────── */
 
-.hover-lift {
-  transition: transform var(--transition-normal),
-              box-shadow var(--transition-normal);
-}
 
-.hover-lift:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
 
 .animate-fadeIn {
   animation: fadeIn var(--transition-normal) both;
@@ -237,9 +229,5 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  .hover-lift:hover {
-    transform: none;
   }
 }
