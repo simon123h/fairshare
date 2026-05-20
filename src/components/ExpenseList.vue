@@ -1,8 +1,5 @@
 <template>
-  <div class="expense-list card">
-    <h2 class="section-title">
-      <span class="mdi mdi-cash-multiple"></span> {{ t('core.expenses') }}
-    </h2>
+  <div class="expense-list">
 
     <div v-if="sortedExpenses.length === 0" class="empty-state">
       <span class="emoji mdi mdi-piggy-bank-outline" style="font-size: 2.5rem; display: block; margin-bottom: 8px;"></span>
@@ -137,7 +134,10 @@ const confirmDelete = (expense: ExpenseData) => {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  padding: var(--space-4);
+}
+
+.desktop-table tr:last-child td {
+  border-bottom: none;
 }
 
 .section-title {
@@ -256,7 +256,7 @@ const confirmDelete = (expense: ExpenseData) => {
 .mobile-card {
   padding: var(--space-3);
   background: var(--color-bg);
-  border: 1px solid var(--color-border-light);
+  border: none;
 }
 
 .card-header {
