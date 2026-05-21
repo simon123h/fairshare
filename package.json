@@ -3,6 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "packageManager": "pnpm@10.28.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "vue-tsc"
+    ]
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
