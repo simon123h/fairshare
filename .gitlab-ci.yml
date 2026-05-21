@@ -4,22 +4,20 @@ stages:
 
 image: node:20
 
-cache:
-  paths:
-    - node_modules/
-
 before_script:
-  - npm install
+  - corepack enable
+  - corepack prepare pnpm@latest-10 --activate
+  - pnpm install
 
 unit-tests:
   stage: test
   script:
-    - npm test
+    - pnpm test
 
 build-job:
   stage: build
   script:
-    - npm run build
+    - pnpm run build
   artifacts:
     paths:
       - dist/
