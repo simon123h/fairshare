@@ -37,6 +37,17 @@
             <span class="avatar mdi mdi-account"></span>
             <span class="name">{{ settlement.to }}</span>
           </div>
+
+          <!-- Settle Button -->
+          <div class="action-area">
+            <button
+              class="btn btn-ghost btn-icon settle-btn"
+              @click="onSettle(settlement)"
+              :title="t('web.recordSettlement')"
+            >
+              <span class="mdi mdi-check"></span>
+            </button>
+          </div>
         </div>
 
         <p class="description-text">
@@ -61,6 +72,10 @@ const props = defineProps<{
   currency: string;
 }>();
 
+const emit = defineEmits<{
+  (e: 'settle', value: ExpenseData): void;
+}>();
+
 const { t } = useI18n();
 
 const settlements = computed<Settlement[]>(() => {
@@ -77,6 +92,17 @@ const settlements = computed<Settlement[]>(() => {
 
   return ledger.getSettlements();
 });
+
+const onSettle = (settlement: Settlement) => {
+  const expense: ExpenseData = {
+    id: Expense.generateId(),
+    payer: settlement.from,
+    amount: settlement.amount,
+    description: t('web.settlementDesc', { from: settlement.from, to: settlement.to }),
+    splitAmong: [settlement.to]
+  };
+  emit('settle', expense);
+};
 
 const formatAmount = (val: number) => {
   return `${val.toFixed(2)} ${props.currency}`;
@@ -132,47 +158,56 @@ const formatAmount = (val: number) => {
   background: var(--color-bg);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-lg);
-  padding: var(--space-4);
+  padding: var(--space-2) var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .settlement-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .person {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   flex: 1;
   min-width: 0;
 }
 
 .person .avatar {
-  font-size: 1.5rem;
+  font-size: 1.125rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
 }
 
 .person .name {
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+}
+
+.person.creditor {
+  flex-direction: row-reverse;
+}
+
+.person.creditor .name {
+  text-align: right;
 }
 
 .arrow-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 2;
+  flex: 0 0 80px;
   gap: var(--space-1);
 }
 
@@ -180,8 +215,8 @@ const formatAmount = (val: number) => {
   background: var(--color-primary-100);
   color: var(--color-primary-dark);
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-sm);
-  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  padding: 2px var(--space-2);
   border-radius: var(--radius-full);
 }
 
@@ -190,7 +225,7 @@ const formatAmount = (val: number) => {
   align-items: center;
   width: 100%;
   position: relative;
-  height: 8px;
+  height: 4px;
 }
 
 .animated-arrow .line {
@@ -202,15 +237,29 @@ const formatAmount = (val: number) => {
 .animated-arrow .point {
   width: 0;
   height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 8px solid var(--color-accent);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid var(--color-accent);
+}
+
+.action-area {
+  display: flex;
+  align-items: center;
+  margin-left: var(--space-2);
+}
+
+.settle-btn {
+  color: var(--color-success);
+  opacity: 0.6;
+}
+
+.settle-btn:hover {
+  opacity: 1;
+  background-color: var(--color-success-light);
+  color: var(--color-success);
 }
 
 .description-text {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-  text-align: center;
-  margin: 0;
+  display: none;
 }
 </style>

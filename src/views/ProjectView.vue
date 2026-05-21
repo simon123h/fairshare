@@ -4,48 +4,31 @@
     <header class="project-header">
       <div class="title-area">
         <h1 class="project-title">{{ project.name }}</h1>
-        
-        <!-- Interactive Currency Badge -->
-        <div class="currency-badge-container" ref="currencyDropdownRef">
-          <button
-            class="currency-badge"
-            @click="toggleCurrencyDropdown"
-            :title="t('web.currency')"
-          >
-            <span>{{ project.currency }}</span>
-            <span class="edit-icon mdi mdi-pencil-outline"></span>
-          </button>
-
-          <!-- Inline Currency Switcher -->
-          <Transition name="fade">
-            <div v-if="showCurrencyDropdown" class="currency-dropdown card shadow-lg">
-              <h4 class="dropdown-title">{{ t('web.currency') }}</h4>
-              <CurrencySelector
-                :modelValue="project.currency"
-                @update:modelValue="changeCurrency"
-              />
-            </div>
-          </Transition>
-        </div>
       </div>
 
-      <router-link to="/" class="btn btn-secondary btn-sm back-link">
+      <router-link to="/" class="btn btn-secondary back-link">
         <span class="mdi mdi-arrow-left"></span> {{ t('web.cancel') }}
       </router-link>
     </header>
 
-    <!-- Dashboard Content Layout -->
-    <main class="project-layout">
-      <!-- Left Column: Participants and Transactions -->
-      <div class="layout-main">
-        <!-- Participant Manager Component -->
-        <ParticipantManager
-          :participants="project.participants"
-          :currency="project.currency"
-          @update:participants="onParticipantsUpdate"
-        />
+    <!-- Tab Navigation -->
+    <nav class="project-tabs">
+      <button
+        v-for="tab in tabs"
+        :key="tab.id"
+        class="tab-btn"
+        :class="{ active: activeTab === tab.id }"
+        @click="activeTab = tab.id"
+      >
+        <span :class="['mdi', tab.icon]"></span>
+        {{ tab.label }}
+      </button>
+    </nav>
 
-        <!-- Expense Recorder -->
+    <!-- Dashboard Content Layout -->
+    <main class="tab-content">
+      <!-- Expenses Tab -->
+      <div v-if="activeTab === 'expenses'" class="tab-pane fade-in">
         <div class="expenses-section card">
           <div class="section-header">
             <h2 class="section-title"><span class="mdi mdi-cash-multiple"></span> {{ t('core.expenses') }}</h2>
@@ -68,21 +51,52 @@
         </div>
       </div>
 
-      <!-- Right Column: Balance overview and settlements calculation -->
-      <div class="layout-sidebar">
-        <!-- Balance table -->
-        <BalanceTable
-          :participants="project.participants"
-          :expenses="project.expenses"
-          :currency="project.currency"
-        />
+      <!-- Settlements Tab -->
+      <div v-if="activeTab === 'settlements'" class="tab-pane fade-in settlements-layout">
+        <div class="settlements-main">
+          <!-- Balance table -->
+          <BalanceTable
+            :participants="project.participants"
+            :expenses="project.expenses"
+            :currency="project.currency"
+          />
+        </div>
+        <aside class="settlements-sidebar">
+          <!-- Settlement card -->
+          <SettlementCard
+            :participants="project.participants"
+            :expenses="project.expenses"
+            :currency="project.currency"
+            @settle="onSaveExpense"
+          />
+        </aside>
+      </div>
 
-        <!-- Settlement card -->
-        <SettlementCard
-          :participants="project.participants"
-          :expenses="project.expenses"
-          :currency="project.currency"
-        />
+      <!-- Project Settings Tab -->
+      <div v-if="activeTab === 'settings'" class="tab-pane fade-in settings-layout">
+        <section class="settings-section">
+          <!-- Participant Manager Component -->
+          <ParticipantManager
+            :participants="project.participants"
+            @update:participants="onParticipantsUpdate"
+          />
+        </section>
+
+        <section class="settings-section">
+          <!-- Project Details Card -->
+          <div class="card">
+            <h2 class="section-title">
+              <span class="mdi mdi-information-outline"></span> {{ t('web.details') }}
+            </h2>
+            <div class="settings-group">
+              <label class="settings-label">{{ t('web.currency') }}</label>
+              <CurrencySelector
+                :modelValue="project.currency"
+                @update:modelValue="changeCurrency"
+              />
+            </div>
+          </div>
+        </section>
       </div>
     </main>
 
@@ -108,7 +122,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useProjects } from '../composables/useProjects';
@@ -134,17 +148,17 @@ const {
 const projectId = computed(() => route.params.id as string);
 const project = computed(() => getProject(projectId.value));
 
-// Currency Editing State
-const showCurrencyDropdown = ref(false);
-const currencyDropdownRef = ref<HTMLElement | null>(null);
+// Tab Management
+const activeTab = ref('settings');
+const tabs = computed(() => [
+  { id: 'settings', label: t('web.projectSettings'), icon: 'mdi-cog-outline' },
+  { id: 'expenses', label: t('web.expenses'), icon: 'mdi-cash-multiple' },
+  { id: 'settlements', label: t('web.settlements'), icon: 'mdi-handshake-outline' },
+]);
 
 // Expense Modal Form States
 const showExpenseForm = ref(false);
 const editingExpense = ref<ExpenseData | null>(null);
-
-const toggleCurrencyDropdown = () => {
-  showCurrencyDropdown.value = !showCurrencyDropdown.value;
-};
 
 const changeCurrency = (symbol: string) => {
   if (project.value && symbol) {
@@ -184,36 +198,13 @@ const onDeleteExpense = (expenseId: string) => {
     removeExpense(project.value.id, expenseId);
   }
 };
-
-// Outside click handling for currency switcher
-const handleClickOutside = (event: MouseEvent) => {
-  if (
-    currencyDropdownRef.value &&
-    !currencyDropdownRef.value.contains(event.target as Node)
-  ) {
-    showCurrencyDropdown.value = false;
-  }
-};
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
-});
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
-});
-
-// Close dropdown on route change
-watch(projectId, () => {
-  showCurrencyDropdown.value = false;
-});
 </script>
 
 <style scoped>
 .project-view {
   max-width: var(--max-width-lg);
   margin: 0 auto;
-  padding: var(--space-6) var(--space-4);
+  padding: var(--space-8) var(--space-4);
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
@@ -240,66 +231,86 @@ watch(projectId, () => {
   color: var(--color-text);
 }
 
-.currency-badge-container {
-  position: relative;
+.project-tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 2px solid var(--color-border-light);
+  margin-bottom: var(--space-4);
+  background: var(--color-bg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: var(--space-2);
 }
 
-.currency-badge {
+.tab-btn {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
-  background: var(--color-primary-100);
-  color: var(--color-primary-dark);
-  font-weight: var(--font-weight-bold);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  border: 1px solid transparent;
-  cursor: pointer;
-  font-size: var(--font-size-sm);
-  transition: all var(--transition-fast);
-}
-
-.currency-badge:hover {
-  background: var(--color-primary-200);
-  border-color: var(--color-primary-dark);
-}
-
-.currency-badge .edit-icon {
-  font-size: 0.8em;
-  opacity: 0.7;
-}
-
-.currency-dropdown {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  z-index: var(--z-dropdown);
-  min-width: 250px;
-  padding: var(--space-3);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-lg);
-}
-
-.dropdown-title {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  margin: 0 0 var(--space-2) 0;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
   color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
-.project-layout {
+.tab-btn:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-50);
+}
+
+.tab-btn.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-content {
+  flex: 1;
+}
+
+.tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.settlements-layout {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-6);
   align-items: start;
 }
 
-.layout-main,
-.layout-sidebar {
+.settings-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.settings-section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-4);
+}
+
+.settings-group {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.settings-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
 }
 
 .expenses-section {
@@ -316,6 +327,9 @@ watch(projectId, () => {
 }
 
 .section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
   margin: 0;
@@ -336,8 +350,22 @@ watch(projectId, () => {
 }
 
 @media (max-width: 1024px) {
-  .project-layout {
+  .settlements-layout,
+  .settings-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-tabs {
+    overflow-x: auto;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tab-btn {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-sm);
   }
 }
 </style>

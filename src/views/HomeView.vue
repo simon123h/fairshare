@@ -92,7 +92,7 @@ const formatRelativeTime = (isoString: string): string => {
 .home-view {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--space-8) var(--space-4);
+  padding: var(--space-12) var(--space-4) var(--space-8);
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
