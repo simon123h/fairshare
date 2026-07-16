@@ -1,6 +1,6 @@
 version: 2
 updates:
-  # Maintain npm dependencies
+  # Maintain pnpm dependencies
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -11,7 +11,7 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - "dependencies"
-      - "npm"
+      - "pnpm"
     groups:
       eslint:
         patterns:
@@ -20,7 +20,7 @@ updates:
           - "eslint-*"
           - "typescript-eslint"
           - "@typescript-eslint/*"
-      npm-frontend-minor-patch:
+      pnpm-frontend-minor-patch:
         patterns:
           - "*"
         update-types:
